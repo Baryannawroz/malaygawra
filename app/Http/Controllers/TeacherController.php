@@ -24,7 +24,7 @@ class TeacherController extends Controller
             })
             ->paginate(30);
 
-        return view('studens.studen_index', compact('teachers', 'search'));
+        return view('teachers.index-teacher', compact('teachers', 'search'));
     }
 
     /**
@@ -34,13 +34,13 @@ class TeacherController extends Controller
     {
         $streets = Street::all();
 
-        return view('teachers.index-teacher', compact('streets'));
+        return view('teachers.create-teacher', compact('streets'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTeacherRequest $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -70,7 +70,7 @@ class TeacherController extends Controller
             'birth_date' => $request->birth_date,
         ]);
 
-        return redirect()->route('teacher.create')->with('success', 'مامۆستاکە بە سەرکەوتووی زیاد کرا');
+        return redirect()->route('teachers')->with('success', 'مامۆستاکە بە سەرکەوتووی زیاد کرا');
     }
 
 

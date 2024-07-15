@@ -6,6 +6,7 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\StageController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\StreetController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -51,6 +52,15 @@ Route::post('student/update/{student}', [StudentsController::class, 'update'])->
 Route::post('student/destroy/{student}', [StudentsController::class, 'destroy'])->name('student.destroy');
 Route::get('student/create', [StudentsController::class, 'create'])->name('student.create');
 Route::post('student/store', [StudentsController::class, 'store'])->name('student.store');
+
+Route::get('teachers', [TeacherController::class, 'index'])->name('teachers');
+Route::get('teacher/edit/{teacher}', [TeacherController::class, 'edit'])->name('teacher.edit');
+Route::get('teacher/show/{teacher}', [TeacherController::class, 'show'])->name('teacher.show');
+Route::post('teacher/update/{teacher}', [TeacherController::class, 'update'])->name('teacher.update');
+Route::post('teacher/destroy/{teacher}', [TeacherController::class, 'destroy'])->name('teacher.destroy');
+Route::get('teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
+Route::post('teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

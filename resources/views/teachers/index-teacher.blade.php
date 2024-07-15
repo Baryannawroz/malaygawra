@@ -2,8 +2,8 @@
     <div class="container mx-auto mt-10" dir="rtl" style="margin: 0 2%">
         <h1 class="text-3xl font-bold mb-5">لیستی مامۆستاکان</h1>
 
-        <x-add-studen-button>
-        </x-add-studen-button>
+        <x-add-teacher-button>
+        </x-add-teacher-button>
 
         <form action="{{ route('teachers') }}" method="GET" class="mb-5">
             <div class="flex" style="margin:  2% 0">
