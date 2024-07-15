@@ -100,17 +100,43 @@ class StudentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Students $students)
+    public function edit(Students $student)
     {
-        //
+        $schools = School::all();
+        $streets = Street::all();
+        $lessons = Lesson::all();
+        return view('student.edit', compact('student', 'schools', 'streets', 'lessons'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStudentsRequest $request, Students $students)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'father_phone' => 'required|string|max:255',
+            'mother_phone' => 'required|string|max:255',
+            'school_id' => 'required|integer',
+            'birth_date' => 'required|date',
+            'street_id' => 'required|integer',
+            'school_stage' => 'required|string|max:255',
+            'stage_id_parwarda' => 'required|integer',
+            'stage_id_quran' => 'required|integer',
+            'photo_path' => 'nullable|image|max:2048',
+            'gender' => 'required|integer',
+            'marital_status' => 'required|integer',
+        ]);
+
+        $student = Students::findOrFail($id);
+        $student->update($request->all());
+
+        if ($request->hasFile('photo_path')) {
+            $path = $request->file('photo_path')->store('photos', 'public');
+            $student->update(['photo_path' => $path]);
+        }
+
+        return redirect()->route('student.index')->with('success', 'Student updated successfully');
     }
 
     /**
