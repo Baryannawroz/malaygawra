@@ -1,12 +1,12 @@
 <x-app-layout>
-    <div class="container mx-auto mt-10">
+    <div class="container mx-auto mt-10" dir="rtl" style="margin: 0 2%">
         <h1 class="text-3xl font-bold mb-5">Student List</h1>
 
         <x-add-studen-button>
         </x-add-studen-button>
 
         <form action="{{ route('students') }}" method="GET" class="mb-5">
-            <div class="flex">
+            <div class="flex" style="margin:  2% 0">
                 <input type="text" name="search"
                     class="form-input flex-grow rounded-l-lg border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white"
                     placeholder="ناوی خوێندکار" value="{{ request()->input('search') }}">
@@ -19,12 +19,12 @@
             <table class="min-w-full bg-white border border-gray-200 text-center    " >
                 <thead>
                     <tr class="text-center">
-                        <th class="py-2 px-4 bg-gray-200 border-b text-left text-sm font-semibold text-gray-600 text-center ">#</th>
-                        <th class="py-2 px-4 bg-gray-200 border-b text-left text-sm font-semibold text-gray-600 text-center">ناوی خوێندکار
+                        <th class="py-2 px-4 bg-gray-200 border-b  text-sm font-semibold text-gray-600 text-center ">#</th>
+                        <th class="py-2 px-4 bg-gray-200 border-b  text-sm font-semibold text-gray-600 text-center">ناوی خوێندکار
                         </th>
-                        <th class="py-2 px-4 bg-gray-200 border-b text-left text-sm font-semibold text-gray-600 text-center">ڕەقەمتەلەفونی باوک
+                        <th class="py-2 px-4 bg-gray-200 border-b  text-sm font-semibold text-gray-600 text-center">ڕەقەمتەلەفونی باوک
                         </th>
-                        <th class="py-2 px-4 bg-gray-200 border-b text-left text-sm font-semibold text-gray-600 text-center>">قوتابخانە
+                        <th class="py-2 px-4 bg-gray-200 border-b  text-sm font-semibold text-gray-600 text-center>">قوتابخانە
                         </th>
                     </tr>
                 </thead>
