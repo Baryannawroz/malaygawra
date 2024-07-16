@@ -28,8 +28,8 @@
                     @forelse($groups as $group)
                     <tr class="{{ $loop->even ? 'bg-gray-100' : 'bg-white' }}">
                         <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $group->id }}</td>
-                        <td class="py-2 px-4 border-b text-sm text-gray-700"><a href="" {{-- {{ route('group.show',
-                                $group) }} --}} class="text-blue-500 hover:underline">{{
+                        <td class="py-2 px-4 border-b text-sm text-gray-700"><a href="{{ route('groupStudent.show',$group->id) }}"
+                                class="text-blue-500 hover:underline">{{
                                 $group->name }}</a></td>
                         <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $group->teacher->name }}</td>
 

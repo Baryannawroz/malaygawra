@@ -53,6 +53,13 @@ Route::post('group/destroy/{group}', [groupController::class, 'destroy'])->name(
 Route::get('group/create', [groupController::class, 'create'])->name('group.create');
 Route::post('group/store', [groupController::class, 'store'])->name('group.store');
 
+Route::get('groupStudents', [GroupController::class, 'index'])->name('groupStudents');
+Route::get('groupStudent/edit/{groupStudent}', [groupController::class, 'edit'])->name('groupStudent.edit');
+Route::post('groupStudent/update/{groupStudent}', [groupController::class, 'update'])->name('groupStudent.update');
+Route::post('groupStudent/destroy/{groupStudent}', [groupController::class, 'destroy'])->name('groupStudent.destroy');
+Route::get('groupStudent/create', [groupController::class, 'create'])->name('groupStudent.create');
+Route::post('groupStudent/store', [groupController::class, 'store'])->name('groupStudent.store');
+
 Route::get('students', [StudentsController::class, 'index'])->name('students');
 Route::get('student/edit/{student}', [StudentsController::class, 'edit'])->name('student.edit');
 Route::get('student/show/{student}', [StudentsController::class, 'show'])->name('student.show');
