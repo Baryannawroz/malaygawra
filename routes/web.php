@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\GroupStudentController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SchoolController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\StageController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\StreetController;
 use App\Http\Controllers\TeacherController;
+use App\Models\GroupStudent;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -53,12 +55,12 @@ Route::post('group/destroy/{group}', [groupController::class, 'destroy'])->name(
 Route::get('group/create', [groupController::class, 'create'])->name('group.create');
 Route::post('group/store', [groupController::class, 'store'])->name('group.store');
 
-Route::get('groupStudents', [GroupController::class, 'index'])->name('groupStudents');
-Route::get('groupStudent/edit/{groupStudent}', [groupController::class, 'edit'])->name('groupStudent.edit');
-Route::post('groupStudent/update/{groupStudent}', [groupController::class, 'update'])->name('groupStudent.update');
-Route::post('groupStudent/destroy/{groupStudent}', [groupController::class, 'destroy'])->name('groupStudent.destroy');
-Route::get('groupStudent/create', [groupController::class, 'create'])->name('groupStudent.create');
-Route::post('groupStudent/store', [groupController::class, 'store'])->name('groupStudent.store');
+Route::get('groupStudent/show/{group}', [GroupStudentController::class, 'show'])->name('groupStudent.show');
+Route::get('groupStudent/edit/{groupStudent}', [GroupStudentController::class, 'edit'])->name('groupStudent.edit');
+Route::post('groupStudent/update/{groupStudent}', [GroupStudentController::class, 'update'])->name('groupStudent.update');
+Route::post('groupStudent/destroy/{groupStudent}', [GroupStudentController::class, 'destroy'])->name('groupStudent.destroy');
+Route::get('groupStudent/create', [GroupStudentController::class, 'create'])->name('groupStudent.create');
+Route::post('groupStudent/store', [GroupStudentController::class, 'store'])->name('groupStudent.store');
 
 Route::get('students', [StudentsController::class, 'index'])->name('students');
 Route::get('student/edit/{student}', [StudentsController::class, 'edit'])->name('student.edit');

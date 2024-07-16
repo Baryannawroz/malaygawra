@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\GroupStudent;
 use App\Http\Requests\StoreGroupStudentRequest;
 use App\Http\Requests\UpdateGroupStudentRequest;
+use App\Models\Group;
+use App\Models\Students;
 
 class GroupStudentController extends Controller
 {
@@ -35,9 +37,12 @@ class GroupStudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(GroupStudent $groupStudent)
+    public function show( $group_id)
     {
-        //
+        $group = Group::find($group_id);
+        $groupStudents = GroupStudent::where($group_id,'group_id');
+        $students=Students::all();
+        return view('groupStudents.group-students',compact('group','groupStudents','students'));
     }
 
     /**
