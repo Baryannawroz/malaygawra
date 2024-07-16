@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto mt-10" dir="rtl" style="margin: 0 2%">
-        <h1 class="text-3xl font-bold mb-5">teacher List</h1>
+        <h1 class="text-3xl font-bold mb-5">student List</h1>
 
         <x-add-studen-button>
         </x-add-studen-button>
@@ -29,12 +29,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($teachers as $teacher)
+                    @forelse($students as $student)
                     <tr>
-                        <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $teacher->id }}</td>
-                        <td class="py-2 px-4 border-b text-sm text-gray-700"><a href="{{ route('teacher.show',$teacher) }}">{{ $teacher->name }}</a></td>
-                        <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $teacher->father_phone }}</td>
-                        <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $teacher->school->name }}</td>
+                        <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $student->id }}</td>
+                        <td class="py-2 px-4 border-b text-sm text-gray-700"><a href="{{ route('student.show',$student) }}">{{ $student->name }}</a></td>
+                        <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $student->father_phone }}</td>
+                        <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $student->school->name }}</td>
                     </tr>
                     @empty
                     <tr>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="mt-5">
-            {{ $teachers->appends(['search' => $search])->links('pagination::tailwind') }}
+            {{ $students->appends(['search' => $search])->links('pagination::tailwind') }}
         </div>
     </div>
 </x-app-layout>

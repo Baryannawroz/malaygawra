@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SchoolController;
@@ -44,6 +45,13 @@ Route::post('stage/update/{stage}', [stageController::class, 'update'])->name('s
 Route::post('stage/destroy/{stage}', [stageController::class, 'destroy'])->name('stage.destroy');
 Route::get('stage/create', [stageController::class, 'create'])->name('stage.create');
 Route::post('stage/store', [stageController::class, 'store'])->name('stage.store');
+
+Route::get('groups', [GroupController::class, 'index'])->name('groups');
+Route::get('group/edit/{group}', [groupController::class, 'edit'])->name('group.edit');
+Route::post('group/update/{group}', [groupController::class, 'update'])->name('group.update');
+Route::post('group/destroy/{group}', [groupController::class, 'destroy'])->name('group.destroy');
+Route::get('group/create', [groupController::class, 'create'])->name('group.create');
+Route::post('group/store', [groupController::class, 'store'])->name('group.store');
 
 Route::get('students', [StudentsController::class, 'index'])->name('students');
 Route::get('student/edit/{student}', [StudentsController::class, 'edit'])->name('student.edit');
