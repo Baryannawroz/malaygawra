@@ -42,7 +42,7 @@ class GroupStudentController extends Controller
         $group = Group::find($group_id);
         $groupStudents = GroupStudent::where($group_id,'group_id');
         $students=Students::all();
-        return view('groupStudents.group-students',compact('group','groupStudents','students'));
+        return view('groupStudents.show-group-student',compact('group','groupStudents','students'));
     }
 
     /**
