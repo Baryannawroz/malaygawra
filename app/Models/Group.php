@@ -8,5 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Group extends Model
 {
     use HasFactory;
-    protected $gaurded=[];
+    protected $guarded=[];
+    public function teacher(){
+        return $this->belongsTo(Teacher::class);
+}
 }

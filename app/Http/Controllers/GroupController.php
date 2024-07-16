@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\UpdateGroupRequest;
+use App\Models\Teacher;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,8 @@ class GroupController extends Controller
      */
     public function create()
     {
-        return view('groups.create');
+        $teachers=Teacher::all();
+        return view('groups.group_create',compact('teachers'));
     }
 
     /**
@@ -39,11 +41,12 @@ class GroupController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'teacher_id' => 'required',
         ]);
 
         Group::create($request->all());
 
-        return redirect()->route('groups.index')->with('success', 'Group created successfully.');
+        return redirect()->route('groups')->with('success', 'بە سەرکەوتی دەرسەکە زیاد کرا');
     }
 
     /**
@@ -59,7 +62,8 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        return view('groups.edit', compact('group'));
+        $teachers=Teacher::all();
+        return view('groups.group_edit', compact('group','teachers'));
     }
 
     /**
@@ -69,11 +73,12 @@ class GroupController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'teacher_id' => 'required',
         ]);
 
         $group->update($request->all());
 
-        return redirect()->route('groups.index')->with('success', 'Group updated successfully.');
+        return redirect()->route('groups')->with('success', 'گۆرانکاریەکە ئەنجام درا');
     }
 
     /**
@@ -83,6 +88,6 @@ class GroupController extends Controller
     {
         $group->delete();
 
-        return redirect()->route('groups.index')->with('success', 'Group deleted successfully.');
+        return redirect()->route('groups')->with('success', 'Group deleted successfully.');
     }
 }

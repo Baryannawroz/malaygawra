@@ -31,8 +31,8 @@
                         <td class="py-2 px-4 border-b text-sm text-gray-700"><a href="" {{-- {{ route('group.show',
                                 $group) }} --}} class="text-blue-500 hover:underline">{{
                                 $group->name }}</a></td>
-                        <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $group->teacher_id->name }}</td>
-                        <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $group->school->name }}</td>
+                        <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $group->teacher->name }}</td>
+
                         <td class="px-6 py-6 whitespace-nowrap flex items-center">
                             <a href="{{ route('group.edit', $group->id) }}"
                                 class="text-blue-500 hover:text-blue-600 mr-4">
@@ -44,7 +44,7 @@
                                 </svg>
                             </a>
                             <form action="{{ route('group.destroy', $group->id) }}" method="POST"
-                                onsubmit="return confirm('Are you sure you want to delete this group?');">
+                                onsubmit="return confirm('دڵنیایت لە سڕینەوەی ئەم دەرسە؟');">
                                 @csrf
                                 @method('post')
                                 <button type="submit" class="text-red-500 hover:text-red-600">
