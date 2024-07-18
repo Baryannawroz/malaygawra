@@ -31,12 +31,15 @@ class GroupStudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGroupStudentRequest $request)
+    public function delete($groupId, $studentId)
     {
-        GroupStudent::create($request->all());
-
-        return redirect()->route('groupStudent.show',$request->group_id)->with('success', 'Student added to group successfully!');
+        // Logic to delete the student from the group
+        GroupStudent::where('group_id', $groupId)
+            ->where('student_id', $studentId)
+            ->delete();
+        return redirect()->route('groupStudent.show', $groupId)->with('success', 'Student removed from the group successfully.');
     }
+
 
 
     /**
@@ -69,8 +72,10 @@ class GroupStudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(GroupStudent $groupStudent)
+    public function store(StoreGroupStudentRequest $request)
     {
-        //
+        GroupStudent::create($request->all());
+
+        return redirect()->route('groupStudent.show', $request->group_id)->with('success', 'Student added to group successfully!');
     }
 }

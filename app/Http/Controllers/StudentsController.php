@@ -54,9 +54,9 @@ class StudentsController extends Controller
             'street_id' => 'required|integer',
             'stage_id_parwarda' => 'required|integer',
             'stage_id_quran' => 'required|integer',
-            'photo_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'gender' => 'required|string|max:10',
-            'marital_status' => 'required|string|max:10',
+            'photo_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'gender' => 'required|integer',
+            'marital_status' => 'required|integer',
             'birth_date' => 'required|date',
         ]);
 
