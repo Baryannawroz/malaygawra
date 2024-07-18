@@ -59,7 +59,7 @@ Route::get('groupStudent/show/{group}', [GroupStudentController::class, 'show'])
 Route::get('groupStudent/edit/{groupStudent}', [GroupStudentController::class, 'edit'])->name('groupStudent.edit');
 Route::post('groupStudent/update/{groupStudent}', [GroupStudentController::class, 'update'])->name('groupStudent.update');
 Route::post('groupStudent/destroy/{groupStudent}', [GroupStudentController::class, 'destroy'])->name('groupStudent.destroy');
-Route::get('groupStudent/create', [GroupStudentController::class, 'create'])->name('groupStudent.create');
+Route::get('groupStudent/create/{group_id}', [GroupStudentController::class, 'create'])->name('groupStudent.create');
 Route::post('groupStudent/store', [GroupStudentController::class, 'store'])->name('groupStudent.store');
 
 Route::get('students', [StudentsController::class, 'index'])->name('students');

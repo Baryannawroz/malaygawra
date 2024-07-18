@@ -21,9 +21,11 @@ class GroupStudentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($group_id)
     {
-        //
+        $group = Group::find($group_id);
+        $students = Students::all();
+        return view('groupStudents.group_create', compact('students', 'group'));
     }
 
     /**
@@ -31,18 +33,21 @@ class GroupStudentController extends Controller
      */
     public function store(StoreGroupStudentRequest $request)
     {
-        //
+        GroupStudent::create($request->all());
+
+        return redirect()->route('groupStudent.show',$request->group_id)->with('success', 'Student added to group successfully!');
     }
+
 
     /**
      * Display the specified resource.
      */
-    public function show( $group_id)
+    public function show($group_id)
     {
         $group = Group::find($group_id);
-        $groupStudents = GroupStudent::where($group_id,'group_id');
-        $students=Students::all();
-        return view('groupStudents.show-group-student',compact('group','groupStudents','students'));
+        $groupStudents = GroupStudent::where('group_id', $group_id)->pluck('student_id');
+        $students = Students::whereIn('id', $groupStudents)->get();
+        return view('groupStudents.show-group-student', compact('group', 'students'));
     }
 
     /**
