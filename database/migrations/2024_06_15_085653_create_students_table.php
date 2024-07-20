@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('photo_path')->nullable();
             $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade');
             $table->foreign('street_id')->references('id')->on('streets')->onDelete('cascade');
-            $table->foreign('stage_id_quran')->references('id')->on('stages')->onDelete('cascade');
-            $table->foreign('stage_id_parwarda')->references('id')->on('stages')->onDelete('cascade');
+            $table->foreign('stage_id_quran')->references('id')->on('lessons')->onDelete('cascade');
+            $table->foreign('stage_id_parwarda')->references('id')->on('lessons')->onDelete('cascade');
             $table->boolean('gender');
             $table->boolean('marital_status'); // Adjust the position as needed
 

@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Absence;
 use App\Http\Requests\StoreAbsenceRequest;
 use App\Http\Requests\UpdateAbsenceRequest;
+use App\Models\AbsentRecord;
+use App\Models\Group;
+use App\Models\GroupStudent;
+use App\Models\Students;
 
 class AbsenceController extends Controller
 {
@@ -19,9 +23,13 @@ class AbsenceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($groupId)
     {
-        //
+        $student_ids = GroupStudent::where('group_id', $groupId)->pluck('student_id');
+        $students = Students::whereIn('id', $student_ids)->get();
+        $group = Group::find($groupId); // Fetch the group details
+
+        return view('absents.index-absent', compact('students', 'group'));
     }
 
     /**
@@ -29,7 +37,18 @@ class AbsenceController extends Controller
      */
     public function store(StoreAbsenceRequest $request)
     {
-        //
+
+        $data = $request->validate([
+            'students.*.id' => 'required|exists:students,id',
+            'students.*.isAbsent' => 'required|boolean',
+        ]);
+
+        $absent = new Absence();
+        $absent->group_id = $request['group_id'];
+        $absent->date = $request['date'];
+        $absent->save();
+        $absent->addAbsent($absent->id,$data['students']);
+        return redirect()->back()->with('success', 'Attendance recorded successfully.');
     }
 
     /**

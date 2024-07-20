@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AbsenceController;
+use App\Http\Controllers\AbsentRecordController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupStudentController;
 use App\Http\Controllers\LessonController;
@@ -62,6 +64,9 @@ Route::post('groupStudent/{group}/{student}', [GroupStudentController::class, 'd
 Route::post('groupStudent/destroy/{groupStudent}', [GroupStudentController::class, 'destroy'])->name('groupStudent.destroy');
 Route::get('groupStudent/create/{group_id}', [GroupStudentController::class, 'create'])->name('groupStudent.create');
 Route::post('groupStudent/store', [GroupStudentController::class, 'store'])->name('groupStudent.store');
+
+Route::get('absent/create/{group_id}', [AbsenceController::class, 'create'])->name('absent.create');
+Route::post('absent/store/', [AbsenceController::class, 'store'])->name('absent.store');
 
 Route::get('students', [StudentsController::class, 'index'])->name('students');
 Route::get('student/edit/{student}', [StudentsController::class, 'edit'])->name('student.edit');

@@ -4,7 +4,7 @@
             <h2 class="text-2xl font-bold mb-6 text-gray-800">زیادکردنی قوتابی</h2>
 
             @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" style="background: rgb(47, 255, 85)">
                 {{ session('success') }}
             </div>
             @endif

@@ -84,7 +84,7 @@ class StudentsController extends Controller
             'birth_date' => $request->birth_date,
         ]);
 
-        return redirect()->route('student.create')->with('success', 'Student added successfully!');
+        return redirect()->route('student.create')->with('success', 'ڕیکۆردەکە بە سەرکەوتووی زیاد کرا');
 }
 
 
