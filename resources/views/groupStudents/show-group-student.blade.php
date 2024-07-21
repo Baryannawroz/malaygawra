@@ -2,8 +2,12 @@
     <div class="container mx-auto mt-10" dir="rtl" style="margin: 0 2%">
         <h1 class="text-3xl font-bold mb-5 text-center d-block bg-blue-500 text-white"
             style="margin: 10px;padding: 10px">لیستی ناوی خوێکاران {{ $group->name }}</h1>
+        <div class="flex justify-center">
 
-        <x-add-button :route="route('groupStudent.create', $group)" :name="'زیادکردنی قوتابی'"></x-add-button>
+            <x-add-button :route="route('groupStudent.create', $group)" :name="'زیادکردنی قوتابی'"></x-add-button>
+            <x-add-button :route="route('absent.create', $group)" :name="' وەرگرتنی غیابات'"></x-add-button>
+            <x-add-button :route="route('absents', $group)" :name="' لیستی غیابات'"></x-add-button>
+        </div>
 
         <div class="overflow-x-auto mt-4">
             <table class="min-w-full bg-white border border-gray-200 text-center">
@@ -37,7 +41,7 @@
                         <td class="py-2 px-4 border-b text-sm text-gray-700">
                             <form action="{{ route('groupStudent.delete', [$group, $student]) }}" method="POST">
                                 @csrf
-                               
+
                                 <button type="submit" class="text-red-500 hover:text-red-700">سڕینەوە</button>
                             </form>
                         </td>

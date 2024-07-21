@@ -17,6 +17,7 @@ class Absence extends Model
             $absence->absence_id     = $id;
             $absence->student_id = $student['id'];
             $absence->isAbsent = $student['isAbsent'];
+          
             $absence->save();
         }
     }

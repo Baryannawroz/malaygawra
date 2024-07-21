@@ -66,6 +66,8 @@ Route::get('groupStudent/create/{group_id}', [GroupStudentController::class, 'cr
 Route::post('groupStudent/store', [GroupStudentController::class, 'store'])->name('groupStudent.store');
 
 Route::get('absent/create/{group_id}', [AbsenceController::class, 'create'])->name('absent.create');
+Route::get('absents/{group_id}', [AbsenceController::class, 'index'])->name('absents');
+Route::get('/absence/records/{id}', [AbsentRecordController::class, 'index'])->name('absence.records');
 Route::post('absent/store/', [AbsenceController::class, 'store'])->name('absent.store');
 
 Route::get('students', [StudentsController::class, 'index'])->name('students');

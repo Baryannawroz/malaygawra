@@ -15,9 +15,11 @@ class AbsenceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($groupId)
     {
-        //
+   $absences=Absence::where('group_id',$groupId)->latest()->get();
+   $group=Group::find($groupId);
+   return view('absents.index-absent',compact('absences','group'));
     }
 
     /**
@@ -29,7 +31,7 @@ class AbsenceController extends Controller
         $students = Students::whereIn('id', $student_ids)->get();
         $group = Group::find($groupId); // Fetch the group details
 
-        return view('absents.index-absent', compact('students', 'group'));
+        return view('absents.create-absent', compact('students', 'group'));
     }
 
     /**
@@ -40,7 +42,7 @@ class AbsenceController extends Controller
 
         $data = $request->validate([
             'students.*.id' => 'required|exists:students,id',
-            'students.*.isAbsent' => 'required|boolean',
+            'students.*.isAbsent' => 'required',
         ]);
 
         $absent = new Absence();
