@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\AbsentRecordController;
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupStudentController;
 use App\Http\Controllers\LessonController;
@@ -13,9 +14,13 @@ use App\Http\Controllers\StreetController;
 use App\Http\Controllers\TeacherController;
 use App\Models\GroupStudent;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/a', function () {
+    return view('test');
 });
 
 Route::get('/dashboard', function () {
@@ -85,6 +90,9 @@ Route::post('teacher/update/{teacher}', [TeacherController::class, 'update'])->n
 Route::post('teacher/destroy/{teacher}', [TeacherController::class, 'destroy'])->name('teacher.destroy');
 Route::get('teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
 Route::post('teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
+
+
+Route::post('/api/search/Students', [ApiController::class, 'searchStudents']);
 
 
 Route::middleware('auth')->group(function () {
