@@ -1,13 +1,17 @@
 <div>
-    <input type="text" wire:model="search" placeholder="Search for student...">
+    <input type="text" wire:model="updatedSearch" placeholder="Search for student...">
 
     @if(!empty($students))
-    <ul>
+    <select>
         @foreach($students as $student)
+
         <li wire:click="selectStudent({{ $student->id }})">
             {{ $student->name }}
         </li>
         @endforeach
-    </ul>
-    @endif
+    </select>
+    @endif{{
+    $search
+     }}
+    <button wire:click='a'>d</button>
 </div>

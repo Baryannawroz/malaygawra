@@ -1,3 +1,5 @@
 <x-app-layout>
-    @livewire('student-search')
+    @livewireStyles
+<livewire:student-search>
+    @livewireScripts
 </x-app-layout>
