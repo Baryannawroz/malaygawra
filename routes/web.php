@@ -98,7 +98,9 @@ Route::post('teacher/destroy/{teacher}', [TeacherController::class, 'destroy'])-
 Route::get('teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
 Route::post('teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
 
-Route::post('/api/search/students', [ApiController::class, 'searchStudents']);
+Route::post('/api/search/student', [ApiController::class, 'searchStudent']);
+Route::post('/api/search/teacher', [ApiController::class, 'searchTeacher']);
+Route::post('/api/search/group', [ApiController::class, 'searchGroup']);
 
 
 
