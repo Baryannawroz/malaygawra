@@ -11,8 +11,9 @@ class ApiController extends Controller
     public function searchStudents(Request $request)
     {
         $search = $request->input('search');
+
         $students = Students::where('name', 'LIKE', "%{$search}%")
-            ->limit(20)
+            ->limit(10)
             ->get()
             ->map(function ($student) {
                 return [

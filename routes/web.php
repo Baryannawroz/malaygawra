@@ -13,11 +13,18 @@ use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\StreetController;
 use App\Http\Controllers\TeacherController;
 use App\Models\GroupStudent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::post('/api/search/', function (Request $request) {
+    // Return the request data as JSON
+    return response()->json([
+        'received' => $request->all(), // Access all request data
+    ]);
 });
 Route::get('/a', function () {
     return view('test');
@@ -91,8 +98,8 @@ Route::post('teacher/destroy/{teacher}', [TeacherController::class, 'destroy'])-
 Route::get('teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
 Route::post('teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
 
+Route::post('/api/search/students', [ApiController::class, 'searchStudents']);
 
-Route::post('/api/search/Students', [ApiController::class, 'searchStudents']);
 
 
 Route::middleware('auth')->group(function () {
