@@ -36,8 +36,26 @@ class ApiController extends Controller
 
         teacherSchedule::create($request->only('teacher_id', 'day_of_week'));
         $teacher = Teacher::find($request['teacher_id']);
-        return response()->json( ['name' => $teacher['name'], 'id' => $teacher['id']]);
+        return response()->json(['name' => $teacher['name'], 'id' => $teacher['id']]);
     }
+    public function destroyTeacherSchedule($id)
+    {
+        // Find the teacher schedule by id
+        $schedule = teacherSchedule::find($id);
+
+        // Check if the schedule exists
+        if ($schedule) {
+            // Delete the schedule
+            $schedule->delete();
+
+            // Return success response
+            return response()->json(['message' => 'ڕیکۆردەکە بەسەرکەوتووی سڕایەوە']);
+        } else {
+            // Return error response if not found
+            return response()->json(['message' => 'ڕیکۆردەکە نەدۆزرایەوە'], 404);
+        }
+    }
+
     public function searchTeacher(Request $request)
     {
         $search = $request->input('search');

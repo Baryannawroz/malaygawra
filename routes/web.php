@@ -103,6 +103,7 @@ Route::post('teacher/store', [TeacherController::class, 'store'])->name('teacher
 Route::get('teacher/assign', [TeacherScheduleController::class, 'index'])->name('teacherSchedules');
 
 Route::post('/api/schedules/add', [ApiController::class, 'addTeacherSchedule']);
+Route::post('/api/schedules/destroy/{id}', [ApiController::class, 'destroyTeacherSchedule']);
 Route::post('/api/search/student', [ApiController::class, 'searchStudent']);
 Route::post('/api/search/teacher', [ApiController::class, 'searchTeacher']);
 Route::post('/api/search/group', [ApiController::class, 'searchGroup']);

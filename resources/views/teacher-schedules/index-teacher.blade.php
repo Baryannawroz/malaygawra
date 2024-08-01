@@ -33,10 +33,14 @@
                                         class="teacherSearch form-select block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
                                         required>
                                     </select>
+                                    </div>
+                                    <div class="flex items-center">
                                     <button
-                                        class="ml-2 px-3 py-1.5 bg-blue-500 text-white text-xs font-medium rounded shadow-sm hover:bg-blue-600 focus:outline-none"
+                                        class="ml-2 px-3 py-2 mt-3 bg-blue-500 text-white text-xs font-medium rounded shadow-sm hover:bg-blue-600 focus:outline-none"
                                         onclick="saveSchedule({{ $index }})">
-                                        {{ __('all.submit') }}
+                                        <span class="p-4">
+                                            ناردن
+                                        </span>
                                     </button>
                                 </div>
                             </div>
@@ -48,7 +52,7 @@
                                     <span>{{ $i++ . "- " }}{{ $schedule->teacher->name }}</span>
                                     <button onclick="deleteSchedule({{ $schedule->id }})"
                                         class="text-red-500 hover:text-red-700">
-                                        <i class="bx bx-trash"></i>
+                                        سڕینەوە
                                     </button>
                                 </div>
                                 <hr>
@@ -96,7 +100,8 @@
             function deleteSchedule(id) {
                 $.ajax({
                     type: "DELETE",
-                    url: "/api/schedule/destroy/" + id,
+                    url: "/api/schedules/destroy/" + id,
+                    type: "POST",
                     data: {
                         _token: '{{ csrf_token() }}'
                     },
