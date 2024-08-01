@@ -12,7 +12,9 @@ use App\Http\Controllers\StageController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\StreetController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherScheduleController;
 use App\Models\GroupStudent;
+use App\Models\teacherSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -98,6 +100,9 @@ Route::post('teacher/destroy/{teacher}', [TeacherController::class, 'destroy'])-
 Route::get('teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
 Route::post('teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
 
+Route::get('teacher/assign', [TeacherScheduleController::class, 'index'])->name('teacherSchedules');
+
+Route::post('/api/schedules/add', [ApiController::class, 'addTeacherSchedule']);
 Route::post('/api/search/student', [ApiController::class, 'searchStudent']);
 Route::post('/api/search/teacher', [ApiController::class, 'searchTeacher']);
 Route::post('/api/search/group', [ApiController::class, 'searchGroup']);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use App\Models\Students;
 use App\Models\Teacher;
+use App\Models\teacherSchedule;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -25,6 +26,17 @@ class ApiController extends Controller
             });
 
         return response()->json($students);
+    }
+    public function addTeacherSchedule(Request $request)
+    {
+        $request->validate([
+            'teacher_id' => 'required|exists:teachers,id',
+            'day_of_week' => 'required|string'
+        ]);
+
+        teacherSchedule::create($request->only('teacher_id', 'day_of_week'));
+        $teacher = Teacher::find($request['teacher_id']);
+        return response()->json( ['name' => $teacher['name'], 'id' => $teacher['id']]);
     }
     public function searchTeacher(Request $request)
     {
