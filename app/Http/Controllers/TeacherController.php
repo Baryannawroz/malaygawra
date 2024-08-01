@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateTeacherRequest;
 use App\Models\Lesson;
 use App\Models\School;
 use App\Models\Street;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -15,7 +16,7 @@ class TeacherController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+       public function index(Request $request)
     {
         $search = $request->input('search');
         $teachers = Teacher::query()
@@ -23,8 +24,8 @@ class TeacherController extends Controller
                 return $query->where('name', 'like', "%{$search}%");
             })
             ->paginate(30);
-
-        return view('teachers.index-teacher', compact('teachers', 'search'));
+        $dayOfWeek = Carbon::today()->dayOfWeek;
+        return view('teachers.index-teacher', compact('teachers', 'search', 'dayOfWeek'));
     }
 
     /**
