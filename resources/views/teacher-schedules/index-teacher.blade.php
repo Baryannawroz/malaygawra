@@ -6,7 +6,7 @@
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200 bg-white">
             <thead class="bg-gray-100">
-                <tr>b
+                <tr>
                     @php
                     $days = ['یەک شەمە','دوو شەمە', 'سێ شەمە', 'چوار شەمە', 'پێنج شەمە', 'هەینی', 'شەمە', 'یەک شەمە'];
                     @endphp
