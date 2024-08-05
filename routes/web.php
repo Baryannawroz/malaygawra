@@ -101,7 +101,7 @@ Route::get('teacher/create', [TeacherController::class, 'create'])->name('teache
 Route::post('teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
 
 Route::get('teacher/assign', [TeacherScheduleController::class, 'index'])->name('teacherSchedules');
-Route::get('/absence/teacher/{dayOfWeek}', [TeacherScheduleController::class, 'create'])->name('teacherSchedule.create');
+Route::get('/absence/teacher', [TeacherScheduleController::class, 'create'])->name('teacherSchedule.create');
 
 
 Route::post('/api/schedules/add', [ApiController::class, 'addTeacherSchedule']);

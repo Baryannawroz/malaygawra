@@ -5,7 +5,7 @@
 
             <x-add-teacher-button>
             </x-add-teacher-button>
-            <x-add-button :route="route('teacherSchedule.create', ['dayOfWeek' => $dayOfWeek])"
+            <x-add-button :route="route('teacherSchedule.create')"
                 :name="'غیاباتی ئەمڕۆ '">
             </x-add-button>
         </div>

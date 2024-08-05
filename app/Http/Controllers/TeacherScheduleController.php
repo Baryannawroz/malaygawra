@@ -22,9 +22,11 @@ class TeacherScheduleController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($day_of_week)
+    public function create()
     {
-        dd($day_of_week);
+       
+        return view('teacher-schedules.create-abcent-teacher');
+
     }
 
     /**
