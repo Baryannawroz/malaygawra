@@ -1,6 +1,5 @@
 <x-app-layout>
-php artisan make:livewire TeacherAbcent
 
-<livewire:teacher-abcent>
+<livewire:teacher-abcents>
 
 </x-app-layout>
