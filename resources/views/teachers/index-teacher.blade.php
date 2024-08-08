@@ -8,6 +8,9 @@
             <x-add-button :route="route('teacherSchedule.create')"
                 :name="'غیاباتی ئەمڕۆ '">
             </x-add-button>
+            <x-add-button :route="route('teacher.Schedules')"
+                :name="'جەدوەلی حەفتانەی'">
+            </x-add-button>
         </div>
 
         <form action="{{ route('teachers') }}" method="GET" class="mb-5">

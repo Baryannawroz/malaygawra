@@ -21,18 +21,18 @@
                             class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                     </div>
 
-                    <table class="min-w-full divide-y divide-gray-200 mb-6">
+                    <table class="min-w-full divide-y divide-gray-200 mb-6 text-center" >
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th
-                                    class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Student ID</th>
+                                    class="px-6 py-3 bg-gray-50  text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    ژمارەی قوتابی</th>
                                 <th
-                                    class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Student Name</th>
+                                    class="px-6 py-3 bg-gray-50  text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    ناوی قوتابی</th>
                                 <th
-                                    class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Is Absent</th>
+                                    class="px-6 py-3 bg-gray-50  text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    غیابات</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">

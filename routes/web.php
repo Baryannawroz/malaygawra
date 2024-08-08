@@ -100,7 +100,8 @@ Route::post('teacher/destroy/{teacher}', [TeacherController::class, 'destroy'])-
 Route::get('teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
 Route::post('teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
 
-Route::get('teacher/assign', [TeacherScheduleController::class, 'index'])->name('teacherSchedules');
+Route::get('teacher/assign', [TeacherScheduleController::class, 'index'])->name('teacher.Schedules');
+Route::get('teacher/absent/store', [TeacherScheduleController::class, 'store'])->name('teacherAbsent.store');
 Route::get('/absence/teacher', [TeacherScheduleController::class, 'create'])->name('teacherSchedule.create');
 
 
