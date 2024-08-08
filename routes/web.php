@@ -7,6 +7,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupStudentController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\StageController;
 use App\Http\Controllers\StudentsController;
@@ -105,6 +106,10 @@ Route::post('teacher/store', [TeacherController::class, 'store'])->name('teacher
 Route::get('teacher/assign', [TeacherScheduleController::class, 'index'])->name('teacher.Schedules');
 Route::post('teacher/absent/store', [TeacherAbsentController::class, 'store'])->name('teacherAbsent.store');
 Route::get('/absence/teacher', [TeacherScheduleController::class, 'create'])->name('teacherSchedule.create');
+Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+
+
+
 
 
 Route::post('/api/schedules/add', [ApiController::class, 'addTeacherSchedule']);
