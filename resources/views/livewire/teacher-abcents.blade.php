@@ -48,9 +48,9 @@
                     <td class="px-6 py-4 whitespace-nowrap">{{ $teacher->teacher->id }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $teacher->teacher->name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <input type="hidden" name="students[{{ $loop->index }}][id]"
+                        <input type="hidden" name="teachers[{{ $loop->index }}][id]"
                             value="{{ $teacher->teacher->id }}">
-                        <select name="students[{{ $loop->index }}][isAbsent]"
+                        <select name="teachers[{{ $loop->index }}][isAbsent]"
                             class="bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value="0" class="bg-green-400">هاتوو</option>
                             <option value="1" class="bg-red-400">غایب</option>

@@ -11,9 +11,11 @@ use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\StageController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\StreetController;
+use App\Http\Controllers\TeacherAbsentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TeacherScheduleController;
 use App\Models\GroupStudent;
+use App\Models\TeacherAbsent;
 use App\Models\teacherSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -101,7 +103,7 @@ Route::get('teacher/create', [TeacherController::class, 'create'])->name('teache
 Route::post('teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
 
 Route::get('teacher/assign', [TeacherScheduleController::class, 'index'])->name('teacher.Schedules');
-Route::get('teacher/absent/store', [TeacherScheduleController::class, 'store'])->name('teacherAbsent.store');
+Route::post('teacher/absent/store', [TeacherAbsentController::class, 'store'])->name('teacherAbsent.store');
 Route::get('/absence/teacher', [TeacherScheduleController::class, 'create'])->name('teacherSchedule.create');
 
 
