@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="grid grid-cols-4 gap-4 m-4">
-        <x-toggle-form title="ڕاپۆرتی غیاباتی مامۆستا" route="/submit">
+        <x-toggle-form title="ڕاپۆرتی غیاباتی مامۆستا" route="{{ route('report.teacherAbsence') }}">
 
             <div class="mb-4">
                 <label for="date1" class="block text-sm font-medium text-gray-700">لە بەرواری</label>

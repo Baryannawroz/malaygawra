@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TeacherAbsent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -12,6 +14,30 @@ class ReportController extends Controller
     public function index()
     {
         return view('reports.reports-home');
+    }
+    public function teacherAbsence(Request $request)
+    {
+        $from = $request->input('from');
+        $to = $request->input('to');
+
+        $absents = TeacherAbsent::where(function ($query) use ($from, $to) {
+            if ($from) {
+                $query->whereDate('date', '>=', $from);
+            }
+            if ($to) {
+                $query->whereDate('date', '<=', $to);
+            }
+        })
+            ->select(
+                'teacher_id',
+                DB::raw('SUM(CASE WHEN isAbsent = 0 THEN 1 ELSE 0 END) AS present_count'),
+                DB::raw('SUM(CASE WHEN isAbsent = 1 THEN 1 ELSE 0 END) AS absent_count'),
+                DB::raw('SUM(CASE WHEN isAbsent = 2 THEN 1 ELSE 0 END) AS permission_count')
+            )
+            ->groupBy('teacher_id')
+            ->get();
+
+        return view('reports.report-teacher-absence',compact('from','to'));
     }
 
     /**

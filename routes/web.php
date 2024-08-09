@@ -106,7 +106,14 @@ Route::post('teacher/store', [TeacherController::class, 'store'])->name('teacher
 Route::get('teacher/assign', [TeacherScheduleController::class, 'index'])->name('teacher.Schedules');
 Route::post('teacher/absent/store', [TeacherAbsentController::class, 'store'])->name('teacherAbsent.store');
 Route::get('/absence/teacher', [TeacherScheduleController::class, 'create'])->name('teacherSchedule.create');
+
+
+
 Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+Route::match(['get', 'post'], '/report/teacher/absence', [ReportController::class, 'teacherAbsence'])->name('report.teacherAbsence');
+// Allow both GET and POST
+
+
 
 
 
