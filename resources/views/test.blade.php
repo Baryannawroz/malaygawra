@@ -1,11 +1,12 @@
-<x-app-layout>
-  <select name="" class="studentSearch w-12" id="" style="width: 300px" >
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
 
-  </select>
-  <select name="" class="teacherSearch w-12" id="" style="width: 300px" >
-
-  </select>
-  <select name="" class="groupSearch w-12" id="" style="width: 300px" >
-
-  </select>
-</x-app-layout>
+</body>
+</html>
