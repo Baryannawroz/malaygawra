@@ -148,7 +148,7 @@
             <p class="card__apply">
                 <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
             </p>
-        </div>
+        </div> d 
         <div class="card card-2">
             <div class="card__icon"><i class="fas fa-bolt"></i></div>
             <p class="card__exit"><i class="fas fa-times"></i></p>
