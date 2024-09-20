@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AbsentRecord;
 use App\Models\TeacherAbsent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,6 +39,30 @@ class ReportController extends Controller
             ->get();
 
         return view('reports.report-teacher-absence',compact('from','to'));
+    }
+    public function studentAbsence(Request $request)
+    {
+        $from = $request->input('from');
+        $to = $request->input('to');
+
+        $absents = AbsentRecord::where(function ($query) use ($from, $to) {
+            if ($from) {
+                $query->whereDate('create_at', '>=', $from);
+            }
+            if ($to) {
+                $query->whereDate('create_at', '<=', $to);
+            }
+        })
+            ->select(
+                'student_id',
+                DB::raw('SUM(CASE WHEN isAbsent = 0 THEN 1 ELSE 0 END) AS present_count'),
+                DB::raw('SUM(CASE WHEN isAbsent = 1 THEN 1 ELSE 0 END) AS absent_count'),
+                DB::raw('SUM(CASE WHEN isAbsent = 2 THEN 1 ELSE 0 END) AS permission_count')
+            )
+            ->groupBy('student_id')
+            ->get();
+
+        return view('reports.report-student-absence',compact('from','to', 'absents'));
     }
 
     /**

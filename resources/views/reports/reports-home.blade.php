@@ -11,14 +11,16 @@
                 <input type="date" id="date1" name="too" class="mt-1 block w-full border-gray-300 rounded-md">
             </div>
         </x-toggle-form>
-        <x-toggle-form title="ڕاپۆرتی غیاباتی مامۆستا" route="/submit">
+        <x-toggle-form title="ڕاپۆرتی غیاباتی قوتابی" route="{{ route('report.studentAbsence') }}">
             <div class="mb-4">
-                <label for="name1" class="block text-sm font-medium text-gray-300">Name:</label>
-                <input type="text" id="name1" name="name1" class="mt-1 block w-full border-gray-300 rounded-md">
+                <label for="name1" class="block text-sm font-medium ">ناوی قوتابی:</label>
+             <select name="student_id" class="studentSearch full-width" id=""></select>
             </div>
             <div class="mb-4">
-                <label for="date1" class="block text-sm font-medium text-gray-700">Date:</label>
-                <input type="date" id="date1" name="date1" class="mt-1 block w-full border-gray-300 rounded-md">
+                <label for="date1" class="block text-sm font-medium text-gray-700">لە:</label>
+                <input type="date" id="date1" name="from" class="mt-1 block w-full border-gray-300 rounded-md">
+                <label for="date1" class="block text-sm font-medium text-gray-700">بۆ:</label>
+                <input type="date" id="date" name="to" class="mt-1 block w-full border-gray-300 rounded-md">
             </div>
         </x-toggle-form>
 

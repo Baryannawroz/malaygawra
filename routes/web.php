@@ -111,6 +111,7 @@ Route::get('/absence/teacher', [TeacherScheduleController::class, 'create'])->na
 
 Route::get('/reports', [ReportController::class, 'index'])->name('reports');
 Route::match(['get', 'post'], '/report/teacher/absence', [ReportController::class, 'teacherAbsence'])->name('report.teacherAbsence');
+Route::match(['get', 'post'], '/report/student/absence', [ReportController::class, 'studentAbsence'])->name('report.studentAbsence');
 // Allow both GET and POST
 
 
