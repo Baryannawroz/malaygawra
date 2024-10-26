@@ -21,7 +21,10 @@
                                 <p class="text-lg text-gray-700"><strong class="text-blue-700">ژمارە تەلەفوونی
                                         باوک:</strong>
                                     {{ $student->father_phone }}</p>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">ژمارەتەلەفونی
+                                <p class="text-lg text-gray-700"><strong class="text-blue-700">ژمارە تەلەفوونی
+                                        :</strong>
+                                    {{ $student->phone }}</p>
+                                <p class="text-lg text-gray-700"><strong class="text-blue-700">ژمارە تەلەفونی
                                         دایک:</strong>
                                     {{ $student->mother_phone }}</p>
                                 <p class="text-lg text-gray-700"><strong class="text-blue-700">قوتابخانە:</strong> {{
@@ -40,6 +43,8 @@
                                     {{ $student->stage_id_quran }}</p>
                                 <p class="text-lg text-gray-700"><strong class="text-blue-700">ڕەگەز:</strong> {{
                                     $student->gender() }}</p>
+                                <p class="text-lg text-gray-700"><strong class="text-blue-700">باری دارای:</strong> {{
+                                    $student->financialStatus() }}</p>
                                 <p class="text-lg text-gray-700"><strong class="text-blue-700">باری کەسی:</strong> {{
                                     $student->marital() }}</p>
                                 <p class="text-lg text-gray-700"><strong class="text-blue-700">بەرواری

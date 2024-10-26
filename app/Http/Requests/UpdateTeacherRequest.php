@@ -11,7 +11,7 @@ class UpdateTeacherRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,13 @@ class UpdateTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'street_id' => 'required|integer',
+            'gender' => 'required|string|max:10',
+            'marital_status' => 'required|string|max:10',
+            'birth_date' => 'required|date',
+            'photo_path' => 'nullable',
         ];
     }
 }

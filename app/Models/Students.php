@@ -23,4 +23,8 @@ return $this->gender==1 ?"نێر":"مێ";
     public function marital(){
 return $this->marital_status==1 ?"خێزاندار":"سەڵت";
     }
+    public function financialStatus()
+    {
+        return $this->financial_status == 1 ? 'خراپ' : ($this->financial_status == 3 ? 'مامناوەند' : 'باش');
+    }
 }

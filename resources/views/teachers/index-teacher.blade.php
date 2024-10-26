@@ -5,11 +5,9 @@
 
             <x-add-teacher-button>
             </x-add-teacher-button>
-            <x-add-button :route="route('teacherSchedule.create')"
-                :name="'غیاباتی ئەمڕۆ '">
+            <x-add-button :route="route('teacherSchedule.create')" :name="'غیاباتی ئەمڕۆ '">
             </x-add-button>
-            <x-add-button :route="route('teacher.Schedules')"
-                :name="'جەدوەلی حەفتانەی'">
+            <x-add-button :route="route('teacher.Schedules')" :name="'جەدوەلی حەفتانەی'">
             </x-add-button>
         </div>
 
@@ -35,6 +33,9 @@
                         <th class="py-2 px-4 bg-gray-200 border-b  text-sm font-semibold text-gray-600 text-center">
                             ڕەقەم تەلەفون
                         </th>
+                        <th class="py-2 px-4 bg-gray-200 border-b  text-sm font-semibold text-gray-600 text-center">
+                            گۆڕانکاری
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,6 +45,8 @@
                         <td class="py-2 px-4 border-b text-sm text-gray-700"><a
                                 href="{{ route('teacher.show',$teacher) }}">{{ $teacher->name }}</a></td>
                         <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $teacher->phone }}</td>
+                        <td class="py-2 px-4 border-b text-sm text-gray-700"><a
+                                href="{{ route('teacher.edit',$teacher) }}">گۆرانکاری</a></td>
 
                     </tr>
                     @empty

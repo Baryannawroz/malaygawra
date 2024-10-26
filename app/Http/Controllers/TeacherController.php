@@ -16,7 +16,7 @@ class TeacherController extends Controller
     /**
      * Display a listing of the resource.
      */
-       public function index(Request $request)
+    public function index(Request $request)
     {
         $search = $request->input('search');
         $teachers = Teacher::query()
@@ -88,7 +88,8 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        //
+        $streets=Street::all();
+        return view('teachers.edit-teacher', compact('teacher','streets'));
     }
 
     /**
@@ -96,8 +97,17 @@ class TeacherController extends Controller
      */
     public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
-        //
-    }
+        $data= $request->validate();
+        $teacher->update($data);
+        if ($request->hasFile('photo_path')) {
+
+            $file = $request->file('photo_path');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('public/photos', $filename);
+            $photoPath = str_replace('public/', 'storage/', $path);
+            $teacher->update(['photo_path' => $photoPath]);
+        }
+        }
 
     /**
      * Remove the specified resource from storage.

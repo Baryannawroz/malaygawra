@@ -47,6 +47,7 @@ class StudentsController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
             'father_phone' => 'required|string|max:15',
             'mother_phone' => 'required|string|max:15',
             'school_id' => 'required|integer',
@@ -56,6 +57,7 @@ class StudentsController extends Controller
             'stage_id_quran' => 'required|integer',
             'photo_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'gender' => 'required|integer',
+            'financial_status' => 'required|integer',
             'marital_status' => 'required|integer',
             'birth_date' => 'required|date',
         ]);
@@ -71,6 +73,7 @@ class StudentsController extends Controller
         // Create a new student record
         $student = Students::create([
             'name' => $request->name,
+            'phone' => $request->phone,
             'father_phone' => $request->father_phone,
             'mother_phone' => $request->mother_phone,
             'school_id' => $request->school_id,
@@ -80,6 +83,7 @@ class StudentsController extends Controller
             'stage_id_quran' => $request->stage_id_quran,
             'photo_path' => $photoPath,
             'gender' => $request->gender,
+            'financial_status' => $request->financial_status,
             'marital_status' => $request->marital_status,
             'birth_date' => $request->birth_date,
         ]);
@@ -105,7 +109,7 @@ class StudentsController extends Controller
         $schools = School::all();
         $streets = Street::all();
         $lessons = Lesson::all();
-        return view('student.edit', compact('student', 'schools', 'streets', 'lessons'));
+        return view('studens.edit-student', compact('student', 'schools', 'streets', 'lessons'));
     }
 
     /**
@@ -115,6 +119,7 @@ class StudentsController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
             'father_phone' => 'required|string|max:255',
             'mother_phone' => 'required|string|max:255',
             'school_id' => 'required|integer',
@@ -125,18 +130,24 @@ class StudentsController extends Controller
             'stage_id_quran' => 'required|integer',
             'photo_path' => 'nullable|image|max:2048',
             'gender' => 'required|integer',
+            'financial_status' => 'required|integer',
             'marital_status' => 'required|integer',
+
         ]);
 
         $student = Students::findOrFail($id);
         $student->update($request->all());
 
         if ($request->hasFile('photo_path')) {
-            $path = $request->file('photo_path')->store('photos', 'public');
-            $student->update(['photo_path' => $path]);
+
+            $file = $request->file('photo_path');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('public/photos', $filename);
+            $photoPath = str_replace('public/', 'storage/', $path);
+            $student->update(['photo_path' => $photoPath]);
         }
 
-        return redirect()->route('student.index')->with('success', 'Student updated successfully');
+        return redirect()->route('students')->with('success', 'Student updated successfully');
     }
 
     /**

@@ -20,6 +20,14 @@
                         @enderror
                     </div>
                     <div class="w-full md:w-1/2 px-3">
+                        <label for="phone" class="block text-gray-700 font-medium mb-2">ژمارە تەلەفونی قوتابی</label>
+                        <input type="text" class="form-input mt-1 block w-full" id="phone" name="phone"
+                            required>
+                        @error('phone')
+                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="w-full md:w-1/2 px-3">
                         <label for="father_phone" class="block text-gray-700 font-medium mb-2">ژمارە تەلەفونی باوک</label>
                         <input type="text" class="form-input mt-1 block w-full" id="father_phone" name="father_phone"
                             required>
@@ -38,9 +46,9 @@
                         @enderror
                     </div>
                     <div class="w-full md:w-1/2 px-3">
-                        <label for="school_id" class="block text-gray-700 font-medium mb-2">خوێندنگا</label>
+                        <label for="school_id" class="block text-gray-700 font-medium mb-2">خوێندنگە</label>
                         <select class="form-select mt-1 block w-full" id="school_id" name="school_id" required>
-                            <option value="" disabled selected>خواێندنگا</option>
+                            <option value="" disabled selected>خوێندنگە</option>
                             @foreach ($schools as $school)
                             <option value="{{ $school->id }}">{{ $school->name }}</option>
                             @endforeach
@@ -120,6 +128,18 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-4">
+                    <div class="w-full md:w-1/2 px-3 mb-4 md:mb-0">
+                        <label for="financial_Status" class="block text-gray-700 font-medium mb-2">باری دارای</label>
+                        <select class="form-select mt-1 block w-full" id="financial_Status" name="financial_status" required>
+                            <option value="" disabled selected>باری دارای</option>
+                            <option value="1">خراپ</option>
+                            <option value="3">مامناوەند</option>
+                            <option value="5">باش</option>
+                        </select>
+                        @error('gender')
+                        <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                        @enderror
+                    </div>
                     <div class="w-full md:w-1/2 px-3 mb-4 md:mb-0">
                         <label for="gender" class="block text-gray-700 font-medium mb-2">ڕەگەز</label>
                         <select class="form-select mt-1 block w-full" id="gender" name="gender" required>

@@ -47,10 +47,10 @@ class ReportController extends Controller
 
         $absents = AbsentRecord::where(function ($query) use ($from, $to) {
             if ($from) {
-                $query->whereDate('create_at', '>=', $from);
+                $query->whereDate('created_at', '>=', $from);
             }
             if ($to) {
-                $query->whereDate('create_at', '<=', $to);
+                $query->whereDate('created_at', '<=', $to);
             }
         })
             ->select(

@@ -14,7 +14,7 @@
         <x-toggle-form title="ڕاپۆرتی غیاباتی قوتابی" route="{{ route('report.studentAbsence') }}">
             <div class="mb-4">
                 <label for="name1" class="block text-sm font-medium ">ناوی قوتابی:</label>
-             <select name="student_id" class="studentSearch full-width" id=""></select>
+             <select name="student_id" class="studentSearch " id=""></select>
             </div>
             <div class="mb-4">
                 <label for="date1" class="block text-sm font-medium text-gray-700">لە:</label>
