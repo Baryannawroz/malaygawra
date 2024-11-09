@@ -77,7 +77,6 @@ Route::post('group/store', [groupController::class, 'store'])->name('group.store
 Route::get('groupStudent/show/{group}', [GroupStudentController::class, 'show'])->name('groupStudent.show');
 Route::get('groupStudent/edit/{groupStudent}', [GroupStudentController::class, 'edit'])->name('groupStudent.edit');
 Route::post('groupStudent/update/{groupStudent}', [GroupStudentController::class, 'update'])->name('groupStudent.update');
-Route::post('groupStudent/{group}/{student}', [GroupStudentController::class, 'delete'])->name('groupStudent.delete');
 Route::post('groupStudent/destroy/{groupStudent}', [GroupStudentController::class, 'destroy'])->name('groupStudent.destroy');
 Route::get('groupStudent/create/{group_id}', [GroupStudentController::class, 'create'])->name('groupStudent.create');
 Route::post('groupStudent/store', [GroupStudentController::class, 'store'])->name('groupStudent.store');
@@ -89,9 +88,10 @@ Route::post('absent/store/', [AbsenceController::class, 'store'])->name('absent.
 
 Route::get('students', [StudentsController::class, 'index'])->name('students');
 Route::get('student/edit/{student}', [StudentsController::class, 'edit'])->name('student.edit');
+Route::get('student/delete/{student}', [StudentsController::class, 'destroy'])->name('student.delete');
 Route::get('student/show/{student}', [StudentsController::class, 'show'])->name('student.show');
 Route::post('student/update/{student}', [StudentsController::class, 'update'])->name('student.update');
-Route::post('student/destroy/{student}', [StudentsController::class, 'destroy'])->name('student.destroy');
+Route::get('student/destroy/{student}', [StudentsController::class, 'destroy'])->name('student.destroy');
 Route::get('student/create', [StudentsController::class, 'create'])->name('student.create');
 Route::post('student/store', [StudentsController::class, 'store'])->name('student.store');
 

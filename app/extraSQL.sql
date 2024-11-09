@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `isAdmin` TINYINT NOT NULL DEFAULT '0' AFTER `name`;

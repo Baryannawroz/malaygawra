@@ -12,15 +12,13 @@
                     <input type="number" value="{{ $group->id }}" name="group_id" hidden>
                     @if(isset($students) && $students->count())
                     <div class="mb-4">
-                        <label for="student_id" class="block text-white mb-2">Select Student</label>
-                        <select name="student_id" id="student_id" class="border p-2 w-full">
-                            @foreach($students as $student)
-                            <option value="{{ $student->id }}">{{ $student->name }}</option>
-                            @endforeach
+                        <label for="student_id" class="block text-white mb-2">قوتابییەک هەڵبژێرە</label>
+                        <select name="student_id" id="student_id" class="border p-2 w-full studentSearch">
+
                         </select>
                     </div>
                     @else
-                    <p class="text-white">No students found.</p>
+                    <p class="text-white">هیچ قوتابیەک نییە .</p>
                     @endif
                 </div>
 
@@ -29,7 +27,7 @@
                 <div class="flex justify-center">
                     <button type="submit"
                         class="text-white border border-white hover:bg-white hover:text-blue-600 font-bold py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline">
-                        Add Student to Group
+                        تۆمارکردن
                     </button>
                 </div>
             </form>

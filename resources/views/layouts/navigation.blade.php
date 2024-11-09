@@ -6,7 +6,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo width="60" height="60"
+                            class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
@@ -40,7 +41,7 @@
 
                 <!-- Teacher Dropdown -->
 
-                <div x-data="{ open: false }" class="relative">
+                <div x-data="{ open: false }" class="relative {{ auth()->user()->isAdmin==0 ? 'hidden' :''}}">
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <div x-data="{ open: false }" class="relative">
                             <x-nav-link class="flex items-center cursor-pointer" @click="open = !open">
@@ -67,6 +68,9 @@
                                     <x-dropdown-link :href="route('lessons')">
                                         ئاستی وانەکان
                                     </x-dropdown-link>
+                                    <x-dropdown-link :href="route('register')">
+                                        بەکارهێنەر </x-dropdown-link>
+
                                 </div>
                             </div>
                         </div>

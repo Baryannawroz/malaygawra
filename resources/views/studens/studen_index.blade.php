@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto mt-10" dir="rtl" style="margin: 0 2%">
-        <h1 class="text-3xl font-bold mb-5">student List</h1>
+        <h1 class="text-3xl font-bold mb-5">لیستی قوتابیەکان</h1>
 
         <x-add-studen-button>
         </x-add-studen-button>
@@ -45,7 +45,10 @@
                         <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $student->school->name }}</td>
                         <td class="">
                             <a href="{{ route('student.edit', $student) }}">
-                                <i class="fas fa-edit text-blue-500 hover:text-blue-700"></i> گۆران</a>
+                                <i class=" text-blue-500 ">گۆرانکاری</i> </a>
+                            <a href="{{ route('student.destroy', $student) }}" class="{{ auth()->user()->isAdmin ?"":"hidden" }}">
+                                <i class=" text-red-500">سڕینەوە</i> </a>
+
                         </td>
                     </tr>
                     @empty
