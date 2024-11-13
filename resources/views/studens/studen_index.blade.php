@@ -45,7 +45,7 @@
                         <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $student->school->name }}</td>
                         <td class="">
                             <a href="{{ route('student.edit', $student) }}">
-                                <i class=" text-blue-500 ">گۆرانکاری</i> </a>
+                                <i class=" text-blue-500 ">گۆرانکاری</i> </a><span width='10px'>&nbsp;&nbsp; &nbsp;</span>
                             <a href="{{ route('student.destroy', $student) }}" class="{{ auth()->user()->isAdmin ?"":"hidden" }}">
                                 <i class=" text-red-500">سڕینەوە</i> </a>
 

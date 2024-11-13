@@ -152,12 +152,12 @@
                         @enderror
                     </div>
                     <div class="w-full md:w-1/2 px-3 mb-4 md:mb-0">
-                        <label for="gender" class="block text-gray-700 font-medium mb-2">باری دارای</label>
-                        <select class="form-select mt-1 block w-full" id="gender" name="gender" required>
+                        <label for="financial_status" class="block text-gray-700 font-medium mb-2">باری دارای</label>
+                        <select class="form-select mt-1 block w-full" id="gender" name="financial_status" required>
                             <option value="" disabled selected>باری دارای</option>
-                            <option value="1" {{ $student->gender == 1 ? 'selected' : '' }}>خراپ</option>
-                            <option value="3" {{ $student->gender == 3 ? 'selected' : '' }}>مامناوەند</option>
-                            <option value="5" {{ $student->gender == 5 ? 'selected' : '' }}>باش</option>
+                            <option value="1" {{ $student->financial_status == 1 ? 'selected' : '' }}>خراپ</option>
+                            <option value="3" {{ $student->financial_status == 3 ? 'selected' : '' }}>مامناوەند</option>
+                            <option value="5" {{ $student->financial_status == 5 ? 'selected' : '' }}>باش</option>
                         </select>
                         @error('financial_status')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
