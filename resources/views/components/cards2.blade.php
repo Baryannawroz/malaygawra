@@ -7,7 +7,7 @@
                 <h5 class="mb-2 text-2xl font-bold tracking-tight dark:text-white">ژمارەی قوتابیەکان</h5>
             </div>
             <div>
-                <img width="40px" src="{{ asset('images/studenIcon.png') }}" alt="">
+                <img width="40px" src="{{ custom_asset('images/studenIcon.png') }}" alt="">
             </div>
             <P></P>
         </div>

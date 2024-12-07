@@ -11,8 +11,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href="{{ asset('build/assets/css/select2.css') }}" rel="stylesheet">
-    <link href="{{ asset('build/assets/css/tailwind.css') }}" rel="stylesheet">
+    <link href="{{ custom_asset('build/assets/css/select2.css') }}" rel="stylesheet">
+    <link href="{{ custom_asset('build/assets/css/tailwind.css') }}" rel="stylesheet">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -36,9 +36,9 @@
         </main>
 
     </div>
-    <script src="{{ asset('build/assets/js/jquery.js') }}"></script>
-    <script src="{{ asset('build/assets/js/select2.js') }}"></script>
-    <script src="{{ asset('build/assets/js/search.js') }}"></script>
+    <script src="{{ custom_asset('build/assets/js/jquery.js') }}"></script>
+    <script src="{{ custom_asset('build/assets/js/select2.js') }}"></script>
+    <script src="{{ custom_asset('build/assets/js/search.js') }}"></script>
 </body>
 
 </html>
