@@ -158,7 +158,7 @@
                     قوتابی
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('teachers')" :active="request()->routeIs('teachers')">
-                    
+                    مامۆستا
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('groups')" :active="request()->routeIs('groups')">
                     دەرسەکان
