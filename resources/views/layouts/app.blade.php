@@ -14,7 +14,10 @@
     <link href="{{ custom_asset('build/assets/css/select2.css') }}" rel="stylesheet">
     <link href="{{ custom_asset('build/assets/css/tailwind.css') }}" rel="stylesheet">
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script type="module" src="{{ custom_asset('build/assets/app-Bg1aHGgo.js') }}"></script>
+    <link rel="stylesheet" href="{{ custom_asset('build/assets/app-HxD4TBxZ.css') }}">
+    <link rel="modulepreload" href="{{ custom_asset('build/assets/app-Bg1aHGgo.js') }}">
+    <link rel="preload" as="style" href="{{ custom_asset('build/assets/app-HxD4TBxZ.css') }}">
 </head>
 
 <body class="font-sans antialiased">

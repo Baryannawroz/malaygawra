@@ -12,7 +12,10 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script type="module" src="{{ custom_asset('build/assets/app-Bg1aHGgo.js') }}"></script>
+        <link rel="stylesheet" href="{{ custom_asset('build/assets/app-HxD4TBxZ.css') }}">
+        <link rel="modulepreload" href="{{ custom_asset('build/assets/app-Bg1aHGgo.js') }}">
+        <link rel="preload" as="style" href="{{ custom_asset('build/assets/app-HxD4TBxZ.css') }}">
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
