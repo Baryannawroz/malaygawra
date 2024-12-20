@@ -154,6 +154,19 @@
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('students')" :active="request()->routeIs('students')">
+                    قوتابی
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('teachers')" :active="request()->routeIs('teachers')">
+                    مامۆستا
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('groups')" :active="request()->routeIs('groups')">
+                    دەرسەکان
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('reports')" :active="request()->routeIs('reports')">
+                    ڕاپۆرت
+                </x-responsive-nav-link>
+             
             </div>
 
             <!-- Responsive Settings Options -->
