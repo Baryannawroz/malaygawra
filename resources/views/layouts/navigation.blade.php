@@ -161,7 +161,7 @@
                     مامۆستا
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('groups')" :active="request()->routeIs('groups')">
-                    دەرسەکان
+                    
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('reports')" :active="request()->routeIs('reports')">
                     ڕاپۆرت
