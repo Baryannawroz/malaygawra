@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        
+
         <div class="bg-gradient-to-r from-pink-400 to-pink-600 text-white rounded-lg shadow-lg p-6">
 
           <div class="flex items-center justify-between">
@@ -28,7 +28,6 @@
 
         </div>
 
-        <!-- Card 3 -->
         <div class="bg-gradient-to-r from-green-400 to-green-600 text-white rounded-lg shadow-lg p-6">
 
             <div class="flex items-center justify-between">
