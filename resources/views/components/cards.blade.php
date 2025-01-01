@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <!-- Card 2 -->
+        
         <div class="bg-gradient-to-r from-pink-400 to-pink-600 text-white rounded-lg shadow-lg p-6">
 
           <div class="flex items-center justify-between">
