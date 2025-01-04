@@ -13,6 +13,8 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="{{ custom_asset('build/assets/css/select2.css') }}" rel="stylesheet">
     <link href="{{ custom_asset('build/assets/css/tailwind.css') }}" rel="stylesheet">
+    <!-- Option 1: Include in HTML -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <!-- Scripts -->
     <script type="module" src="{{ custom_asset('build/assets/app-Bg1aHGgo.js') }}"></script>
     <link rel="stylesheet" href="{{ custom_asset('build/assets/app-HxD4TBxZ.css') }}">

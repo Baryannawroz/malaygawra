@@ -2,6 +2,9 @@
 
 namespace App\View\Components;
 
+use App\Models\Lesson;
+use App\Models\Students;
+use App\Models\Teacher;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -21,6 +24,10 @@ class Cards extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.cards');
+        $students=Students::count();
+        $lessons=Lesson::count();
+        $teachers=Teacher::count();
+
+        return view('components.cards',compact('students','lessons','teachers'));
     }
 }

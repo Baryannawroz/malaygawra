@@ -1,6 +1,9 @@
 <x-app-layout>
     <div dir="rtl" style="margin: 0 2%">
+        @if (auth()->user()->isAdmin)
+
         <x-add-button :route="route('group.create')" :name="'زیادکردنی دەرسێک'"></x-add-button>
+        @endif
         <form action="{{ route('groups') }}" method="GET" class="mb-5">
             <div class="flex" style="margin: 2% 0">
                 <input type="text" name="search"

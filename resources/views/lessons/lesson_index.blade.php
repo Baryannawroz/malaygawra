@@ -1,5 +1,6 @@
 <x-app-layout>
-    <div class="flex justify-center mt-2">
+
+    <div class="flex justify-center mt-2 {{ auth()->user()->isAdmin ?'':'d-none' }}">
         <x-add-lesson-button></x-add-lesson-button>
     </div>
 
