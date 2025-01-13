@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\administratorAbsent;
+use App\Models\AdministratorAbsent;
 use App\Http\Requests\StoreadministratorAbsentControllerRequest;
 use App\Http\Requests\UpdateadministratorAbsentControllerRequest;
 use App\Models\administratorAbsentController as ModelsAdministratorAbsentController;
