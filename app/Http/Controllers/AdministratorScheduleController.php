@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\administratorSchedule;
+use App\Models\AdministratorSchedule;
 use App\Http\Requests\StoreadministratorScheduleControllerRequest;
 use App\Http\Requests\UpdateadministratorScheduleControllerRequest;
 use App\Models\AdministratorSchedule as ModelsAdministratorSchedule;
