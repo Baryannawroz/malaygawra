@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Teacher;
 use App\Models\User;
+use App\Models\administratorAbsentController;
 use Illuminate\Auth\Access\Response;
 
-class TeacherPolicy
+class AdministratorAbsentControllerPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class TeacherPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Teacher $teacher): bool
+    public function view(User $user, administratorAbsentController $administratorAbsentController): bool
     {
         //
     }
@@ -35,7 +35,7 @@ class TeacherPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Teacher $teacher): bool
+    public function update(User $user, administratorAbsentController $administratorAbsentController): bool
     {
         //
     }
@@ -43,16 +43,15 @@ class TeacherPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete( Teacher $teacher): bool
+    public function delete(User $user, administratorAbsentController $administratorAbsentController): bool
     {
-        dd($teacher);
-        return true;
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Teacher $teacher): bool
+    public function restore(User $user, administratorAbsentController $administratorAbsentController): bool
     {
         //
     }
@@ -60,7 +59,7 @@ class TeacherPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Teacher $teacher): bool
+    public function forceDelete(User $user, administratorAbsentController $administratorAbsentController): bool
     {
         //
     }

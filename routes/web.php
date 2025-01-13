@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\AbsentRecordController;
+use App\Http\Controllers\AdministratorAbsentController;
+use App\Http\Controllers\AdministratorScheduleController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupStudentController;
@@ -98,16 +100,22 @@ Route::get('student/create', [StudentsController::class, 'create'])->name('stude
 Route::post('student/store', [StudentsController::class, 'store'])->name('student.store');
 
 Route::get('teachers', [TeacherController::class, 'index'])->name('teachers');
+Route::get('administrators', [TeacherController::class, 'administrators'])->name('administrators');
 Route::get('teacher/edit/{teacher}', [TeacherController::class, 'edit'])->name('teacher.edit');
 Route::get('teacher/show/{teacher}', [TeacherController::class, 'show'])->name('teacher.show');
 Route::post('teacher/update/{teacher}', [TeacherController::class, 'update'])->name('teacher.update');
 Route::post('teacher/destroy/{teacher}', [TeacherController::class, 'destroy'])->name('teacher.destroy');
 Route::get('teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
 Route::post('teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
+Route::get('teacher/delete/{teacher}', [TeacherController::class, 'destroy'])->name('teacher.delete');
 
 Route::get('teacher/assign', [TeacherScheduleController::class, 'index'])->name('teacher.Schedules');
 Route::post('teacher/absent/store', [TeacherAbsentController::class, 'store'])->name('teacherAbsent.store');
 Route::get('/absence/teacher', [TeacherScheduleController::class, 'create'])->name('teacherSchedule.create');
+
+Route::get('administrator/assign', [AdministratorScheduleController::class, 'index'])->name('administrator.Schedules');
+Route::post('administrator/absent/store', [AdministratorAbsentController::class, 'store'])->name('administratorAbsent.store');
+Route::get('/administrator/absence', [AdministratorScheduleController::class, 'create'])->name('administrator.create');
 
 
 
@@ -123,7 +131,9 @@ Route::match(['get', 'post'], '/report/student/absence', [ReportController::clas
 
 
 Route::post('/api/schedules/add', [ApiController::class, 'addTeacherSchedule']);
+Route::post('/api/schedules/administrator/add', [ApiController::class, 'addAdministratorSchedule']);
 Route::post('/api/schedules/destroy/{id}', [ApiController::class, 'destroyTeacherSchedule']);
+Route::post('/api/schedules/administrator/destroy/{id}', [ApiController::class, 'destroyAdministratorSchedule']);
 Route::post('/api/search/student', [ApiController::class, 'searchStudent']);
 Route::post('/api/search/teacher', [ApiController::class, 'searchTeacher']);
 Route::post('/api/search/group', [ApiController::class, 'searchGroup']);

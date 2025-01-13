@@ -45,8 +45,14 @@
                         <td class="py-2 px-4 border-b text-sm text-gray-700"><a
                                 href="{{ route('teacher.show',$teacher) }}">{{ $teacher->name }}</a></td>
                         <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $teacher->phone }}</td>
-                        <td class="py-2 px-4 border-b text-sm text-gray-700"><a
-                                href="{{ route('teacher.edit',$teacher) }}">گۆرانکاری</a></td>
+                        <td class="py-2 px-4 border-b text-sm text-gray-700"><a class="py-2 px-4"
+                                href="{{ route('teacher.edit',$teacher) }}">گۆرانکاری</a>
+@if (auth()->user()->isAdmin)
+
+<a href="{{ route('teacher.delete',$teacher) }}">سڕینەوە</a>
+@endif
+                        </td>
+
 
                     </tr>
                     @empty

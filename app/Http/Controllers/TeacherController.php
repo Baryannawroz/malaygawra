@@ -23,9 +23,14 @@ class TeacherController extends Controller
             ->when($search, function ($query, $search) {
                 return $query->where('name', 'like', "%{$search}%");
             })
-            ->paginate(30);
+            ->latest()->paginate(30);
         $dayOfWeek = Carbon::today()->dayOfWeek;
         return view('teachers.index-teacher', compact('teachers', 'search', 'dayOfWeek'));
+    }
+    public function administrators(Request $request)
+    {
+        $dayOfWeek = Carbon::today()->dayOfWeek;
+        return view('administrators.index-administrator', compact(  'dayOfWeek'));
     }
 
     /**
@@ -88,8 +93,8 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        $streets=Street::all();
-        return view('teachers.edit-teacher', compact('teacher','streets'));
+        $streets = Street::all();
+        return view('teachers.edit-teacher', compact('teacher', 'streets'));
     }
 
     /**
@@ -97,7 +102,7 @@ class TeacherController extends Controller
      */
     public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
-        $data= $request->validate();
+        $data = $request->validated();
         $teacher->update($data);
         if ($request->hasFile('photo_path')) {
 
@@ -107,13 +112,15 @@ class TeacherController extends Controller
             $photoPath = str_replace('public/', 'storage/', $path);
             $teacher->update(['photo_path' => $photoPath]);
         }
-        }
+        return redirect()->back();
+    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Teacher $teacher)
     {
-        //
+        $teacher->delete();
+        return redirect()->route('teachers');
     }
 }

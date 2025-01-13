@@ -68,6 +68,8 @@
                                     <x-dropdown-link :href="route('lessons')">
                                         ئاستی وانەکان
                                     </x-dropdown-link>
+                                    <x-dropdown-link :href="route('administrators')">
+                                        جەدوەلی کارگێر </x-dropdown-link>
                                     <x-dropdown-link :href="route('register')">
                                         بەکارهێنەر </x-dropdown-link>
 

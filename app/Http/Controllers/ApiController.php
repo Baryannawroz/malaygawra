@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdministratorSchedule;
 use App\Models\Group;
 use App\Models\Students;
 use App\Models\Teacher;
@@ -38,10 +39,38 @@ class ApiController extends Controller
         $teacher = Teacher::find($request['teacher_id']);
         return response()->json(['name' => $teacher['name'], 'id' => $teacher['id']]);
     }
+    public function addAdministratorSchedule(Request $request)
+    {
+        $request->validate([
+            'teacher_id' => 'required|exists:teachers,id',
+            'day_of_week' => 'required|string'
+        ]);
+
+        AdministratorSchedule::create($request->only('teacher_id', 'day_of_week'));
+        $teacher = Teacher::find($request['teacher_id']);
+        return response()->json(['name' => $teacher['name'], 'id' => $teacher['id']]);
+    }
     public function destroyTeacherSchedule($id)
     {
         // Find the teacher schedule by id
         $schedule = teacherSchedule::find($id);
+
+        // Check if the schedule exists
+        if ($schedule) {
+            // Delete the schedule
+            $schedule->delete();
+
+            // Return success response
+            return response()->json(['message' => 'ڕیکۆردەکە بەسەرکەوتووی سڕایەوە']);
+        } else {
+            // Return error response if not found
+            return response()->json(['message' => 'ڕیکۆردەکە نەدۆزرایەوە'], 404);
+        }
+    }
+    public function destroyAdministratorSchedule($id)
+    {
+        // Find the teacher schedule by id
+        $schedule = AdministratorSchedule::find($id);
 
         // Check if the schedule exists
         if ($schedule) {
