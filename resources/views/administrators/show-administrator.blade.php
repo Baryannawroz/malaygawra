@@ -5,7 +5,7 @@
                 <div class="col-lg-4 col-12 mb-4 mb-lg-0">
                     @if ($teacher->photo_path)
                     <div class="mb-6">
-                        <img src="{{ custom_asset($teacher->photo_path) }}" alt="Student Photo"
+                        <img src="{{ asset($teacher->photo_path) }}" alt="Student Photo"
                             style="height: 300px; width: 300px; object-fit: cover; border-radius: 50%;"
                             class="w-full h-auto rounded-lg shadow-md border-4 border-blue-100">
                     </div>
@@ -14,7 +14,8 @@
                     @endif
                 </div>
                 <div class="col-lg-8 col-12 p-4 center ">
-                    <h2 class="text-5xl font-bold mb-6 text-center text-blue-800"> ناوی قوتابی: {{ $teacher->name }}</h2>
+                    <h2 class="text-5xl font-bold mb-6 text-center text-blue-800"> ناوی قوتابی: {{ $teacher->name }}
+                    </h2>
                     <div class="mb-6">
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div>

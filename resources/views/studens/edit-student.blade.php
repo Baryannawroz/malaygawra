@@ -23,9 +23,9 @@
                     </div>
                     <div class="w-full md:w-1/2 px-3">
                         <label for="phone" class="block text-gray-700 font-medium mb-2">ژمارە تەلەفونی
-                            </label>
+                        </label>
                         <input type="text" class="form-input mt-1 block w-full" id="phone" name="phone"
-                            value="{{ $student->phone }}" >
+                            value="{{ $student->phone }}">
                         @error('phone')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
                         @enderror
@@ -131,7 +131,7 @@
                         <label for="photo_path" class="block text-gray-700 font-medium mb-2">وێنەی قوتابی</label>
                         <input type="file" class="form-input mt-1 block w-full" id="photo_path" name="photo_path">
                         @if ($student->photo_path)
-                        <img src="{{ custom_asset('storage/' . $student->photo_path) }}" alt="Student Photo" class="mt-2"
+                        <img src="{{ asset('storage/' . $student->photo_path) }}" alt="Student Photo" class="mt-2"
                             style="height: 100px;">
                         @endif
                         @error('photo_path')

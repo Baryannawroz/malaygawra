@@ -4,4 +4,4 @@
 'alt' => 'Application Logo', // Default alt text
 ])
 
-<img src="{{ custom_asset('images/malaygawra.png') }}" alt="" style="width: {{ $width }}px; height: {{ $height }}px;">
+<img src="{{ asset('images/malaygawra.png') }}" alt="" style="width: {{ $width }}px; height: {{ $height }}px;">

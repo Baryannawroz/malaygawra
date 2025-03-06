@@ -11,15 +11,15 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href="{{ custom_asset('build/assets/css/select2.css') }}" rel="stylesheet">
-    <link href="{{ custom_asset('build/assets/css/tailwind.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/assets/css/select2.css') }}" rel="stylesheet">
+    <link href="{{ asset('build/assets/css/tailwind.css') }}" rel="stylesheet">
     <!-- Option 1: Include in HTML -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <!-- Scripts -->
-    <script type="module" src="{{ custom_asset('build/assets/app-Bg1aHGgo.js') }}"></script>
-    <link rel="stylesheet" href="{{ custom_asset('build/assets/app-HxD4TBxZ.css') }}">
-    <link rel="modulepreload" href="{{ custom_asset('build/assets/app-Bg1aHGgo.js') }}">
-    <link rel="preload" as="style" href="{{ custom_asset('build/assets/app-HxD4TBxZ.css') }}">
+    <script type="module" src="{{ asset('build/assets/app-Bg1aHGgo.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('build/assets/app-HxD4TBxZ.css') }}">
+    <link rel="modulepreload" href="{{ asset('build/assets/app-Bg1aHGgo.js') }}">
+    <link rel="preload" as="style" href="{{ asset('build/assets/app-HxD4TBxZ.css') }}">
 </head>
 
 <body class="font-sans antialiased">
@@ -41,9 +41,9 @@
         </main>
 
     </div>
-    <script src="{{ custom_asset('build/assets/js/jquery.js') }}"></script>
-    <script src="{{ custom_asset('build/assets/js/select2.js') }}"></script>
-    <script src="{{ custom_asset('build/assets/js/search.js') }}"></script>
+    <script src="{{ asset('build/assets/js/jquery.js') }}"></script>
+    <script src="{{ asset('build/assets/js/select2.js') }}"></script>
+    <script src="{{ asset('build/assets/js/search.js') }}"></script>
 </body>
 
 </html>
