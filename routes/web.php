@@ -122,6 +122,8 @@ Route::get('/administrator/absence', [AdministratorScheduleController::class, 'c
 Route::get('/reports', [ReportController::class, 'index'])->name('reports');
 Route::match(['get', 'post'], '/report/teacher/absence', [ReportController::class, 'teacherAbsence'])->name('report.teacherAbsence');
 Route::match(['get', 'post'], '/report/student/absence', [ReportController::class, 'studentAbsence'])->name('report.studentAbsence');
+Route::match(['get', 'post'], '/report/students', [ReportController::class, 'studentInfo'])->name('report.student');
+Route::match(['get', 'post'], '/report/teachers', [ReportController::class, 'teacherInfo'])->name('report.teacher');
 // Allow both GET and POST
 
 

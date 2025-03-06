@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\AbsentRecord;
+use App\Models\School;
+use App\Models\Students;
+use App\Models\Teacher;
 use App\Models\TeacherAbsent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +17,8 @@ class ReportController extends Controller
      */
     public function index()
     {
-        return view('reports.reports-home');
+        $schools=School::all();
+        return view('reports.reports-home',compact('schools'));
     }
     public function teacherAbsence(Request $request)
     {
@@ -64,18 +68,56 @@ class ReportController extends Controller
 
         return view('reports.report-student-absence',compact('from','to', 'absents'));
     }
+    public function studentInfo(Request $request ){
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $from = $request->input('from');
+        $to = $request->input('to');
+        $isMale= $request->input('isMale');
+        $school_id=$request->input('school_id');
+        $students = Students::query()
+            ->with('school');
+        if ($from) {
+            $students->whereDate('birth_date', '>=', $from);
+        }
+        if ($to) {
+            $students->whereDate('birth_date', '<=', $to);
+        }
+        if (!is_null($isMale)) {
+            $students->where('gender', $isMale);
+        }
+        if ($school_id) {
+            $students->where('school_id', $school_id);
+        }
+
+        $students = $students->paginate(50);;
+        $schools=School::all();
+        return view('reports.report-student-info', compact('from', 'to', 'isMale','students','schools'));
+
+    }
+    public function teacherInfo(Request $request ){
+
+        $from = $request->input('from');
+        $to = $request->input('to');
+        $isMale= $request->input('isMale');
+        $teachers = Teacher::query();
+        if ($from) {
+            $teachers->whereDate('birth_date', '>=', $from);
+        }
+        if ($to) {
+            $teachers->whereDate('birth_date', '<=', $to);
+        }
+        if (!is_null($isMale)) {
+            $teachers->where('gender', $isMale);
+        }
+
+
+        $teachers = $teachers->paginate(50);;
+        return view('reports.report-teacher-info', compact('from', 'to', 'isMale','teachers'));
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+
     public function store(Request $request)
     {
         //

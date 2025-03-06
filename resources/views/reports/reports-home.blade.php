@@ -1,5 +1,50 @@
 <x-app-layout>
     <div class="grid grid-cols-4 gap-4 m-4">
+        <x-toggle-form title="ڕاپۆرتی  قوتابی" route="{{ route('report.student') }}">
+
+            <div class="mb-4">
+                <label for="" class="block text-sm font-medium ">ناوی قوتابخانە:</label>
+             <select name="school_id" class="w-full" id="">
+                <option value="">هەموو</option>
+                @foreach($schools as $school)
+                <option value="{{ $school->id }}">{{ $school->name }}</option>
+                @endforeach
+             </select>
+            </div>
+            <div class="mb-4">
+                <label for="" class="block text-sm font-medium "> ڕەگەز:</label>
+             <select name="isMale" class="w-full" id="">
+                <option value="">هەموو</option>
+                <option value="1">نێر</option>
+                <option value="0">مێ</option>
+             </select>
+            </div>
+            <div class="mb-4">
+                <label for="date1" class="block text-sm font-medium text-gray-700">لە:</label>
+                <input type="date" id="date1" name="from" class="mt-1 block w-full border-gray-300 rounded-md">
+                <label for="date1" class="block text-sm font-medium text-gray-700">بۆ:</label>
+                <input type="date" id="date" name="to" class="mt-1 block w-full border-gray-300 rounded-md">
+            </div>
+        </x-toggle-form>
+        <x-toggle-form title="ڕاپۆرتی  مامۆستا" route="{{ route('report.teacher') }}">
+
+          
+            <div class="mb-4">
+                <label for="" class="block text-sm font-medium "> ڕەگەز:</label>
+             <select name="isMale" class="w-full" id="">
+                <option value="">هەموو</option>
+                <option value="1">نێر</option>
+                <option value="0">مێ</option>
+             </select>
+            </div>
+            <div class="mb-4">
+                <label for="date1" class="block text-sm font-medium text-gray-700">لە:</label>
+                <input type="date" id="date1" name="from" class="mt-1 block w-full border-gray-300 rounded-md">
+                <label for="date1" class="block text-sm font-medium text-gray-700">بۆ:</label>
+                <input type="date" id="date" name="to" class="mt-1 block w-full border-gray-300 rounded-md">
+            </div>
+        </x-toggle-form>
+
         <x-toggle-form title="ڕاپۆرتی غیاباتی مامۆستا" route="{{ route('report.teacherAbsence') }}">
 
             <div class="mb-4">

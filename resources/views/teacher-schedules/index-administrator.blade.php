@@ -8,7 +8,7 @@
             <thead class="bg-gray-100">
                 <tr>
                     @php
-                    $days = ['یەک شەمە','دوو شەمە', 'سێ شەمە', 'چوار شەمە', 'پێنج شەمە', 'هەینی', 'شەمە', 'یەک شەمە'];
+                    $days = ['یەک شەمە','دوو شەمە', 'سێ شەمە', 'چوار شەمە', 'پێنج شەمە', 'هەینی', 'شەمە'];
                     @endphp
                     @foreach ($days as $day)
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">

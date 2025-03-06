@@ -11,12 +11,13 @@ class Students extends Model
     use HasFactory;
     protected $table = 'students';
     protected $guarded=[];
-    public function School(){
+    public function school(){
         return $this->belongsTo(School::class);
     }
     public function Street(){
         return $this->belongsTo(Street::class);
     }
+
     public function gender(){
 return $this->gender==1 ?"نێر":"مێ";
     }
