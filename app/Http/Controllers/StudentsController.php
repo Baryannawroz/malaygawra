@@ -21,7 +21,6 @@ class StudentsController extends Controller
         $students = Students::query()
             ->when($search, function ($query, $search) {
                 return $query->where('name', 'like', "%{$search}%");
-
             })
             ->paginate(30);
 
@@ -33,11 +32,10 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        $schools=School::all();
-        $streets=Street::all();
-        $lessons=Lesson::all();
-        return view('studens.create-student', compact('schools','streets','lessons'));
-
+        $schools = School::all();
+        $streets = Street::all();
+        $lessons = Lesson::all();
+        return view('studens.create-student', compact('schools', 'streets', 'lessons'));
     }
 
     /**
@@ -67,7 +65,7 @@ class StudentsController extends Controller
             $file = $request->file('photo_path');
             $filename = time() . '_' . $file->getClientOriginalName();
             $path = $file->storeAs('public/photos', $filename);
-            $photoPath = str_replace('public/', 'storage/', $path);
+            $photoPath = str_replace('public/', '', $path);
         }
 
         // Create a new student record
@@ -89,7 +87,7 @@ class StudentsController extends Controller
         ]);
 
         return redirect()->route('student.create')->with('success', 'ڕیکۆردەکە بە سەرکەوتووی زیاد کرا');
-}
+    }
 
 
     /**
@@ -97,8 +95,7 @@ class StudentsController extends Controller
      */
     public function show(Students $student)
     {
-       return view('studens.show_studen',compact('student'));
-
+        return view('studens.show_studen', compact('student'));
     }
 
     /**
@@ -143,7 +140,7 @@ class StudentsController extends Controller
             $file = $request->file('photo_path');
             $filename = time() . '_' . $file->getClientOriginalName();
             $path = $file->storeAs('public/photos', $filename);
-            $photoPath = str_replace('public/', 'storage/', $path);
+            $photoPath = str_replace('public/', '', $path);
             $student->update(['photo_path' => $photoPath]);
         }
 

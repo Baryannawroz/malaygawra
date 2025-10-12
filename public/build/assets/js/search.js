@@ -11,8 +11,9 @@ $(document).ready(function () {
 
     // Initialize Select2 with AJAX
     $('.studentSearch').select2({
+      
         placeholder: 'قوتابییەک هەڵبژێرە',
-            width: '100%', 
+            width: '100%',
         allowClear: true,
         ajax: {
             url: '/api/search/student',
