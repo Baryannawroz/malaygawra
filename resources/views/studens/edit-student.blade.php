@@ -135,7 +135,7 @@ use Illuminate\Support\Facades\Storage;
                         <label for="photo_path" class="block text-gray-700 font-medium mb-2">وێنەی قوتابی</label>
                         <input type="file" class="form-input mt-1 block w-full" id="photo_path" name="photo_path">
                         @if ($student->photo_path)
-                        <img src="{{ Storage::url($student->photo_path) }}" alt="Student Photo" class="mt-2"
+                        <img src="{{ Storage::url(str_replace('storage/', '', $student->photo_path)) }}" alt="Student Photo" class="mt-2"
                             style="height: 100px;">
                         @endif
                         @error('photo_path')

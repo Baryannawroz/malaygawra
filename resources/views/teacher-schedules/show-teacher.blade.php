@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
                 <div class="col-lg-4 col-12 mb-4 mb-lg-0">
                     @if ($student->photo_path)
                     <div class="mb-6">
-                        <img src="{{ Storage::url($student->photo_path) }}" alt="Student Photo"
+                        <img src="{{ Storage::url(str_replace('storage/', '', $student->photo_path)) }}" alt="Student Photo"
                             style="height: 300px; width: 300px; object-fit: cover; border-radius: 50%;"
                             class="w-full h-auto rounded-lg shadow-md border-4 border-blue-100">
                     </div>
