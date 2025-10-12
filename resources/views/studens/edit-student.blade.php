@@ -1,7 +1,3 @@
-@php
-use Illuminate\Support\Facades\Storage;
-@endphp
-
 <x-app-layout>
     <div class="container mx-auto px-4 py-8" dir="rtl">
         <div class="max-w-3xl bg-white p-8 mx-4 rounded shadow" style="padding: 10px">
@@ -135,8 +131,8 @@ use Illuminate\Support\Facades\Storage;
                         <label for="photo_path" class="block text-gray-700 font-medium mb-2">وێنەی قوتابی</label>
                         <input type="file" class="form-input mt-1 block w-full" id="photo_path" name="photo_path">
                         @if ($student->photo_path)
-                        <img src="{{ Storage::url(str_replace('storage/', '', $student->photo_path)) }}" alt="Student Photo" class="mt-2"
-                            style="height: 100px;">
+                        <img src="{{ asset('storage/app/public/' . $student->photo_path) }}" alt="Student Photo"
+                            class="mt-2" style="height: 100px;">
                         @endif
                         @error('photo_path')
                         <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
