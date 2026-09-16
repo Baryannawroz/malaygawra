@@ -35,7 +35,7 @@ class StreetController extends Controller
         street::create($request->validated());
 
         // Redirect back with a success message
-        return redirect()->back()->with('success', 'street created successfully.');
+        return redirect()->back()->with('success', 'گەڕەکەکە زیاد کرا');
     }
 
 
@@ -70,7 +70,7 @@ class StreetController extends Controller
         $street->update($validated);
 
         // Redirect back with a success message
-        return redirect()->route('streets')->with('success', 'street updated successfully.');
+        return redirect()->route('streets')->with('success', 'گۆڕانکارییەکان پاشەکەوت کران');
     }
 
 
@@ -80,7 +80,7 @@ class StreetController extends Controller
     public function destroy(street $street)
     {
         $street->delete();
-        return redirect()->route('streets')->with('success', 'street deleted successfully.');
+        return redirect()->route('streets')->with('success', 'گەڕەکەکە سڕایەوە');
 
     }
 }

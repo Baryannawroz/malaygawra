@@ -1,47 +1,42 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <h1 style="font-size:20px;margin-bottom:4px">چوونەژوورەوە</h1>
+    <p class="mg-muted" style="margin-bottom:18px;font-size:14px">بۆ بەردەوامبوون ئیمەیڵ و وشەی نهێنی بنووسە.</p>
 
-    <form method="POST" action="{{ route('login') }}">
+    <x-auth-session-status :status="session('status')" />
+
+    <form method="POST" action="{{ route('login') }}" class="mg-stack">
         @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="mg-field">
+            <x-input-label for="email" value="ئیمەیڵ" />
+            <x-text-input id="email" type="email" name="email" :value="old('email')" required autofocus
+                autocomplete="username" dir="ltr" />
+            <x-input-error :messages="$errors->get('email')" />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="mg-field" x-data="{ show: false }">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <x-input-label for="password" value="وشەی نهێنی" />
+                @if (Route::has('password.request'))
+                <a class="mg-link" style="font-size:13px" href="{{ route('password.request') }}">وشەی نهێنیت لەبیرچووە؟</a>
+                @endif
+            </div>
+            <div style="position:relative">
+                <input id="password" name="password" :type="show ? 'text' : 'password'" type="password" class="mg-input"
+                    required autocomplete="current-password" dir="ltr" style="padding-left:44px">
+                <button type="button" class="mg-btn mg-btn-ghost mg-btn-icon" @click="show = !show" data-no-lock
+                    style="position:absolute;left:4px;top:4px" :aria-label="show ? 'شاردنەوەی وشەی نهێنی' : 'پیشاندانی وشەی نهێنی'">
+                    <i class="bi" :class="show ? 'bi-eye-slash' : 'bi-eye'"></i>
+                </button>
+            </div>
+            <x-input-error :messages="$errors->get('password')" />
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+        <label for="remember_me" style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer">
+            <input id="remember_me" type="checkbox" name="remember" style="width:16px;height:16px">
+            <span>لەبیرم بێت</span>
+        </label>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
+        <button type="submit" class="mg-btn mg-btn-primary" style="width:100%">چوونەژوورەوە</button>
     </form>
 </x-guest-layout>

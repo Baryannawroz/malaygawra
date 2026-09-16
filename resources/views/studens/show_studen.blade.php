@@ -1,62 +1,52 @@
+@php
+    $parwarda = \App\Models\Lesson::find($student->stage_id_parwarda);
+    $quran = \App\Models\Lesson::find($student->stage_id_quran);
+@endphp
 <x-app-layout>
-    <div class="container mx-auto py-8 px-4 bg-blue-50">
-        <div class="mx-auto bg-white p-8 rounded-lg shadow-lg">
-            <div class="flex">
-                <div class="col-lg-4 col-12 mb-4 mb-lg-0">
-                    @if ($student->photo_path)
-                    <div class="mb-6">
-                        <img src="/storage/app/public/{{ str_replace('storage/', '', $student->photo_path) }}"
-                            alt="Student Photo"
-                            style="height: 300px; width: 300px; object-fit: cover; border-radius: 50%;"
-                            class="w-full h-auto rounded-lg shadow-md border-4 border-blue-100">
-                    </div>
-                    @else
-                    <p class="text-center text-gray-500">وێنەی تۆمار نەکراوە</p>
-                    @endif
-                </div>
-                <div class="col-lg-8 col-12 p-4 center ">
-                    <h2 class="text-5xl font-bold mb-6 text-center text-blue-800"> ناوی قوتابی: {{ $student->name }}
-                    </h2>
-                    <div class="mb-6">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <div>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">ژمارە تەلەفوونی
-                                        باوک:</strong>
-                                    {{ $student->father_phone }}</p>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">ژمارە تەلەفوونی
-                                        :</strong>
-                                    {{ $student->phone }}</p>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">ژمارە تەلەفونی
-                                        دایک:</strong>
-                                    {{ $student->mother_phone }}</p>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">قوتابخانە:</strong> {{
-                                    $student->school->name }}</p>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">قۆناغ:</strong> {{
-                                    $student->school_stage }}</p>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">کۆلان:</strong> {{
-                                    $student->street->name }}</p>
-                            </div>
-                            <div>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">ئاستی پەروەردەی:</strong>
-                                    {{
-                                    $student->stage_id_parwarda }}</p>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">ئاستی قوران
-                                        خوێندن:</strong>
-                                    {{ $student->stage_id_quran }}</p>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">ڕەگەز:</strong> {{
-                                    $student->gender() }}</p>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">باری دارای:</strong> {{
-                                    $student->financialStatus() }}</p>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">باری کەسی:</strong> {{
-                                    $student->marital() }}</p>
-                                <p class="text-lg text-gray-700"><strong class="text-blue-700">بەرواری
-                                        لەدایکبوون:</strong> {{
-                                    $student->birth_date }}</p>
-                            </div>
-                        </div>
+    <x-page-header title="پرۆفایلی قوتابی" :back="route('students')" back-label="لیستی قوتابیان">
+        <a href="{{ route('student.edit', $student) }}" class="mg-btn mg-btn-primary"><i class="bi bi-pencil"></i> دەستکاری</a>
+        <button type="button" class="mg-btn mg-btn-secondary" onclick="window.print()" data-no-lock><i class="bi bi-printer"></i> چاپکردن</button>
+    </x-page-header>
+
+    <div class="mg-card">
+        <div class="mg-card-body">
+            <div class="mg-profile-head">
+                <x-photo-avatar :path="$student->photo_path" :name="$student->name" size="xl" />
+                <div>
+                    <h2 style="font-size:22px">{{ $student->name }}</h2>
+                    <div class="mg-summary" style="margin-top:8px">
+                        <span class="mg-badge mg-badge-primary">{{ $student->gender() }}</span>
+                        <span class="mg-badge">{{ $student->school->name ?? '—' }}</span>
+                        <span class="mg-badge">{{ $student->school_stage }}</span>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="mg-card">
+        <div class="mg-card-header"><h3 class="mg-card-title">پەیوەندی</h3></div>
+        <div class="mg-card-body">
+            <dl class="mg-dl">
+                <div><dt>مۆبایلی قوتابی</dt><dd><a class="ltr mg-link" href="tel:{{ $student->phone }}">{{ $student->phone ?: '—' }}</a></dd></div>
+                <div><dt>مۆبایلی باوک</dt><dd><a class="ltr mg-link" href="tel:{{ $student->father_phone }}">{{ $student->father_phone ?: '—' }}</a></dd></div>
+                <div><dt>مۆبایلی دایک</dt><dd><a class="ltr mg-link" href="tel:{{ $student->mother_phone }}">{{ $student->mother_phone ?: '—' }}</a></dd></div>
+                <div><dt>گەڕەک</dt><dd>{{ $student->street->name ?? '—' }}</dd></div>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mg-card">
+        <div class="mg-card-header"><h3 class="mg-card-title">زانیاری</h3></div>
+        <div class="mg-card-body">
+            <dl class="mg-dl">
+                <div><dt>بەرواری لەدایکبوون</dt><dd class="ltr">{{ $student->birth_date }}</dd></div>
+                <div><dt>باری خێزانی</dt><dd>{{ $student->marital() }}</dd></div>
+                <div><dt>باری دارایی</dt><dd>{{ $student->financialStatus() }}</dd></div>
+                <div><dt>قوتابخانە</dt><dd>{{ $student->school->name ?? '—' }}</dd></div>
+                <div><dt>ئاستی پەروەردەیی</dt><dd>{{ $parwarda->name ?? '—' }}</dd></div>
+                <div><dt>ئاستی قیرائەت</dt><dd>{{ $quran->name ?? '—' }}</dd></div>
+            </dl>
         </div>
     </div>
 </x-app-layout>

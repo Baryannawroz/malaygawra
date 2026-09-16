@@ -133,7 +133,7 @@ class StudentsController extends Controller
         ]);
 
         $student = Students::findOrFail($id);
-        $student->update($request->all());
+        $student->update($request->except(['_token', 'photo_path']));
 
         if ($request->hasFile('photo_path')) {
 
@@ -144,7 +144,7 @@ class StudentsController extends Controller
             $student->update(['photo_path' => $photoPath]);
         }
 
-        return redirect()->route('students')->with('success', 'Student updated successfully');
+        return redirect()->route('students')->with('success', 'زانیارییەکانی قوتابی پاشەکەوت کران');
     }
 
     /**
@@ -153,6 +153,6 @@ class StudentsController extends Controller
     public function destroy(Students $student)
     {
         $student->delete();
-        return redirect()->back();
+        return redirect()->route('students')->with('success', 'قوتابییەکە سڕایەوە');
     }
 }

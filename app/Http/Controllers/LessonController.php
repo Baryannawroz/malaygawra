@@ -22,7 +22,7 @@ class LessonController extends Controller
      */
     public function create()
     {
-        return view('Lessons.Lesson_create');
+        return view('lessons.lesson_create');
     }
 
     /**
@@ -35,7 +35,7 @@ class LessonController extends Controller
         Lesson::create($request->validated());
 
         // Redirect back with a success message
-        return redirect('lessons')->with('success', 'Lesson created successfully.');
+        return redirect('lessons')->with('success', 'ئاستەکە زیاد کرا');
     }
 
 
@@ -67,7 +67,7 @@ class LessonController extends Controller
         $Lesson->update($validated);
 
         // Redirect back with a success message
-        return redirect()->route('lessons')->with('success', 'Lesson updated successfully.');
+        return redirect()->route('lessons')->with('success', 'گۆڕانکارییەکان پاشەکەوت کران');
     }
 
 
@@ -77,7 +77,7 @@ class LessonController extends Controller
     public function destroy(Lesson $Lesson)
     {
         $Lesson->delete();
-        return redirect()->route('lessons')->with('success', 'Lesson deleted successfully.');
+        return redirect()->route('lessons')->with('success', 'ئاستەکە سڕایەوە');
 
     }
 }

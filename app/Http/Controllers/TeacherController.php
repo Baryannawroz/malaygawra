@@ -102,7 +102,8 @@ class TeacherController extends Controller
      */
     public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
-        $data = $request->validated();
+        // Don't overwrite the stored photo path with the upload object / null
+        $data = collect($request->validated())->except('photo_path')->all();
         $teacher->update($data);
         if ($request->hasFile('photo_path')) {
 
@@ -112,7 +113,7 @@ class TeacherController extends Controller
             $photoPath = str_replace('public/', '', $path);
             $teacher->update(['photo_path' => $photoPath]);
         }
-        return redirect()->back();
+        return redirect()->route('teacher.show', $teacher)->with('success', 'زانیارییەکانی مامۆستا پاشەکەوت کران');
     }
 
     /**
@@ -121,6 +122,6 @@ class TeacherController extends Controller
     public function destroy(Teacher $teacher)
     {
         $teacher->delete();
-        return redirect()->route('teachers');
+        return redirect()->route('teachers')->with('success', 'مامۆستاکە سڕایەوە');
     }
 }

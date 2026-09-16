@@ -88,6 +88,6 @@ class GroupController extends Controller
     {
         $group->delete();
 
-        return redirect()->route('groups')->with('success', 'Group deleted successfully.');
+        return redirect()->route('groups')->with('success', 'دەرسەکە سڕایەوە');
     }
 }

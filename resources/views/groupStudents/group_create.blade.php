@@ -1,36 +1,29 @@
 <x-app-layout>
-    <div class="flex items-center justify-center h-screen">
-        <div class="bg-blue-600 p-6 rounded-lg shadow-md w-3/4 h-3/4 flex justify-center items-center">
+    <x-page-header title="زیادکردنی قوتابی بۆ دەرس" :subtitle="$group->name" :back="route('groupStudent.show', $group->id)"
+        back-label="گەڕانەوە بۆ دەرس" />
 
-            <form action="{!! route('groupStudent.store') !!}" method="POST"
-                class="mt-8 space-y-6 w-3/4 flex-col justify-center items-center">
-                @csrf
-                <h1 class="text-5xl font-bold mb-4 text-center text-white">زیادکردنی قوتابی بۆ دەرسی</h1>
-                <h6 class="text-center text-xl w-full text-white">{{ $group->name }}</h6>
-
-                <div class="container mx-auto p-4" >
-                    <input type="number" value="{{ $group->id }}" name="group_id" hidden>
-                    @if(isset($students) && $students->count())
-                    <div class="mb-4">
-                        <label for="student_id" class="block text-white mb-2">قوتابییەک هەڵبژێرە</label>
-                        <select name="student_id" id="student_id" class="border p-2 w-full studentSearch">
-
-                        </select>
-                    </div>
-                    @else
-                    <p class="text-white">هیچ قوتابیەک نییە .</p>
-                    @endif
-                </div>
-
-                <input type="hidden" name="group_id" value="{{ $group->id }}">
-
-                <div class="flex justify-center">
-                    <button type="submit"
-                        class="text-white border border-white hover:bg-white hover:text-blue-600 font-bold py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline">
-                        تۆمارکردن
-                    </button>
-                </div>
-            </form>
+    <form action="{{ route('groupStudent.store') }}" method="POST" class="mg-card" style="max-width:640px">
+        @csrf
+        <input type="hidden" name="group_id" value="{{ $group->id }}">
+        <div class="mg-card-body">
+            @if (isset($students) && $students->count())
+            <div class="mg-field">
+                <label for="student_id" class="mg-label">قوتابی <span class="req">*</span></label>
+                <select name="student_id" id="student_id" class="studentSearch" required></select>
+                <p class="mg-help">ناوی قوتابی بنووسە بۆ گەڕان.</p>
+                @error('student_id')<p class="mg-error">{{ $message }}</p>@enderror
+            </div>
+            @else
+            <x-mg-empty icon="bi-people" title="هیچ قوتابییەک تۆمار نەکراوە">
+                <a href="{{ route('student.create') }}" class="mg-link">سەرەتا قوتابی زیاد بکە</a>
+            </x-mg-empty>
+            @endif
         </div>
-    </div>
+        @if (isset($students) && $students->count())
+        <div class="mg-card-footer mg-form-actions">
+            <button type="submit" class="mg-btn mg-btn-primary"><i class="bi bi-check-lg"></i> زیادکردن</button>
+            <a href="{{ route('groupStudent.show', $group->id) }}" class="mg-btn mg-btn-secondary">هەڵوەشاندنەوە</a>
+        </div>
+        @endif
+    </form>
 </x-app-layout>

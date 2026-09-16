@@ -1,52 +1,59 @@
-<!-- resources/views/absence/index.blade.php -->
+@php
+    $present = $absences->where('isAbsent', 0)->count();
+    $absent = $absences->where('isAbsent', 1)->count();
+    $leave = $absences->where('isAbsent', 2)->count();
+@endphp
 <x-app-layout>
-    <div class="bg-gray-100 py-8" dir="rtl">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-sm sm:rounded-lg p-6">
-                <h2 class="text-2xl font-bold mb-6 text-center">دەرسی :{{ $group->name }} <span class="bg-blue-400" style="color: rgb(100, 166, 246)">
-                        بەرواری :{{ $absence->date }}</span>
-                </h2>
+    <x-page-header :title="'غیاباتی ' . $group->name" :back="route('absents', $group->id)" back-label="مێژووی غیابات">
+        <button type="button" class="mg-btn mg-btn-secondary" onclick="window.print()" data-no-lock><i class="bi bi-printer"></i> چاپکردن</button>
+    </x-page-header>
 
-
-
-                <table class="min-w-full divide-y divide-gray-200 mb-6">
-                    <thead>
-                        <tr>
-                            <th
-                                class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Student ID
-                            </th>
-                            <th
-                                class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Student Name
-                            </th>
-                            <th
-                                class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Attendance Status
-                            </th>
-
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($absences as $absence)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-center">{{ $absence->student->id }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center">{{ $absence->student->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center">
-                                @if($absence->isAbsent == 0)
-                                هاتوو
-                                @elseif($absence->isAbsent == 1)
-                                غایب
-                                @else
-                                ئیجازە
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $absence->date }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+    <div class="mg-card">
+        <div class="mg-card-header">
+            <div>
+                <span class="mg-muted">بەروار:</span> <strong class="ltr">{{ $absence->date }}</strong>
             </div>
+            <div class="mg-summary">
+                <span class="mg-badge mg-badge-success">هاتوو: {{ $present }}</span>
+                <span class="mg-badge mg-badge-danger">غایب: {{ $absent }}</span>
+                <span class="mg-badge mg-badge-warning">ئیجازە: {{ $leave }}</span>
+            </div>
+        </div>
+        <div class="mg-table-wrap">
+            <table class="mg-table">
+                <thead>
+                    <tr>
+                        <th class="num">#</th>
+                        <th>ناوی قوتابی</th>
+                        <th>دۆخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($absences as $record)
+                    <tr>
+                        <td class="num">{{ $loop->iteration }}</td>
+                        <td>
+                            @if ($record->student)
+                            <a href="{{ route('student.show', $record->student) }}" class="mg-link">{{ $record->student->name }}</a>
+                            @else
+                            <span class="mg-muted">قوتابیی سڕاوە</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($record->isAbsent == 0)
+                            <span class="mg-badge mg-badge-success"><i class="bi bi-check"></i> هاتوو</span>
+                            @elseif ($record->isAbsent == 1)
+                            <span class="mg-badge mg-badge-danger"><i class="bi bi-x"></i> غایب</span>
+                            @else
+                            <span class="mg-badge mg-badge-warning"><i class="bi bi-dash"></i> ئیجازە</span>
+                            @endif
+                        </td>
+                    </tr>
+                    @empty
+                    <x-mg-empty colspan="3" title="هیچ تۆمارێک نییە" />
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
 </x-app-layout>

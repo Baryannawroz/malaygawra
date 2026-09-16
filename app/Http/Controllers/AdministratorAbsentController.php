@@ -33,7 +33,8 @@ class AdministratorAbsentController extends Controller
     {
 
         $data = $request->validate([
-            'teachers.*.id' => 'required|exists:students,id',
+            'date' => 'required|date',
+            'teachers.*.id' => 'required|exists:teachers,id',
             'teachers.*.isAbsent' => 'required',
         ]);
         foreach ($data['teachers'] as $teacher) {

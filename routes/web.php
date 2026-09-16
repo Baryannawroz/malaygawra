@@ -25,7 +25,8 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 
 Route::get('/', function () {
-    return view('welcome');
+    // Send visitors straight into the app (guests are redirected to login by the auth middleware)
+    return redirect()->route('dashboard');
 });
 Route::post('/api/search/', function (Request $request) {
     // Return the request data as JSON

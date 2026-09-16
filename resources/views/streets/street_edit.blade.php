@@ -1,30 +1,19 @@
 <x-app-layout>
-    <div class="flex items-center justify-center h-screen bg-gray-100">
-        <div class="bg-blue-600 p-6 rounded-lg shadow-md w-full max-w-md">
-            <h1 class="text-2xl font-bold mb-4 text-center text-white">update New street</h1>
+    <x-page-header title="دەستکاریکردنی گەڕەک" :subtitle="$street->name" :back="route('streets')" back-label="گەڕەکەکان" />
 
-            <form action="{!! route('street.update',$street->id) !!}" method="POST" class="mt-8 space-y-6">
-                @csrf
-
-                <div class="mb-4">
-                    <input type="text" name="name" id="name" value="{{ $street->name }}" placeholder="please enter name"
-                        class="border border-gray-300 rounded-lg py-2 px-3 w-full focus:outline-none focus:border-blue-500"
-                        required>
-                    @error('name')
-                    <p class="text-red-500 text-sm">{{ $message }}</p>
-                    @enderror
-                </div>
-
-
-
-
-
-                <div class="flex justify-center">
-
-<button type="submit"
-    class="text-white border border-white  hover:bg-white hover:text-blue-600 font-bold py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline">Update street</button>
-  </div>
-            </form>
+    <form action="{{ route('street.update', $street->id) }}" method="POST" class="mg-card" style="max-width:560px">
+        @csrf
+        <div class="mg-card-body">
+            <div class="mg-field">
+                <label for="name" class="mg-label">ناو <span class="req">*</span></label>
+                <input type="text" id="name" name="name" class="mg-input{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                    value="{{ old('name', $street->name) }}" required autofocus autocomplete="off">
+                @error('name')<p class="mg-error">{{ $message }}</p>@enderror
+            </div>
         </div>
-    </div>
+        <div class="mg-card-footer mg-form-actions">
+            <button type="submit" class="mg-btn mg-btn-primary"><i class="bi bi-check-lg"></i> پاشەکەوتکردنی گۆڕانکاری</button>
+            <a href="{{ route('streets') }}" class="mg-btn mg-btn-secondary">هەڵوەشاندنەوە</a>
+        </div>
+    </form>
 </x-app-layout>

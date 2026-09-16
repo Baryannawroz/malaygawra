@@ -50,7 +50,7 @@ class AbsenceController extends Controller
         $absent->date = $request['date'];
         $absent->save();
         $absent->addAbsent($absent->id,$data['students']);
-        return redirect()->back()->with('success', 'Attendance recorded successfully.');
+        return redirect()->back()->with('success', 'غیاباتەکە بە سەرکەوتوویی تۆمار کرا');
     }
 
     /**

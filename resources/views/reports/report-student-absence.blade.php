@@ -1,41 +1,45 @@
 <x-app-layout>
+    <x-page-header title="ڕاپۆرتی غیاباتی قوتابیان" :back="route('reports')" back-label="ڕاپۆرتەکان">
+        <button type="button" class="mg-btn mg-btn-secondary" onclick="window.print()" data-no-lock><i class="bi bi-printer"></i> چاپکردن</button>
+    </x-page-header>
 
-    <div dir="rtl">
-        <div class="container mx-auto p-4">
-            <table class="min-w-full bg-white border border-gray-300 text-center">
+    <div class="mg-card">
+        <form method="GET" action="{{ route('report.studentAbsence') }}" class="mg-card-header mg-no-print">
+            <div class="mg-toolbar" style="flex:1;align-items:flex-end">
+                <div class="mg-field"><label class="mg-label" for="f-from">لە بەرواری</label>
+                    <input type="date" id="f-from" name="from" value="{{ $from }}" class="mg-input"></div>
+                <div class="mg-field"><label class="mg-label" for="f-to">تا بەرواری</label>
+                    <input type="date" id="f-to" name="to" value="{{ $to }}" class="mg-input"></div>
+                <button type="submit" class="mg-btn mg-btn-primary" data-no-lock><i class="bi bi-funnel"></i> فلتەر</button>
+            </div>
+            <span class="mg-muted" style="font-size:13px">@include('reports._filters-summary')</span>
+        </form>
+
+        <div class="mg-table-wrap">
+            <table class="mg-table">
                 <thead>
                     <tr>
-                        <th class="border-b p-2 cursor-pointer" wire:click="sortByTeacher()">
-                            ناوی قوتابی
-                        </th>
-                        <th class="border-b p-2 cursor-pointer" wire:click="sortByPresentCount()">
-                            ئامادە بوو
-                        </th>
-                        <th class="border-b p-2 cursor-pointer" wire:click="sortByAbsentCount()">
-                            غیاب
-                        </th>
-                        <th class="border-b p-2 cursor-pointer" wire:click="sortByPermissionCount()">
-                            ئیجازە
-                        </th>
+                        <th class="num">#</th>
+                        <th>ناوی قوتابی</th>
+                        <th>هاتوو</th>
+                        <th>غایب</th>
+                        <th>ئیجازە</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($absents as $absent)
+                    @forelse ($absents->sortByDesc('absent_count') as $absent)
                     <tr>
-                        <td class="border-b p-2">{{ $absent->student->name }}</td>
-                        <td class="border-b p-2">{{ $absent->present_count }}</td>
-                        <td class="border-b p-2">{{ $absent->absent_count }}</td>
-                        <td class="border-b p-2">{{ $absent->permission_count }}</td>
+                        <td class="num">{{ $loop->iteration }}</td>
+                        <td>{{ $absent->student->name ?? '—' }}</td>
+                        <td><span class="mg-badge mg-badge-success">{{ $absent->present_count }}</span></td>
+                        <td><span class="mg-badge mg-badge-danger">{{ $absent->absent_count }}</span></td>
+                        <td><span class="mg-badge mg-badge-warning">{{ $absent->permission_count }}</span></td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <x-mg-empty colspan="5" icon="bi-calendar-x" title="لەم ماوەیەدا هیچ غیاباتێک تۆمار نەکراوە" />
+                    @endforelse
                 </tbody>
             </table>
-
-            <!-- Pagination Links -->
-            {{-- <div class="mt-4">
-                {{ $absents->links() }}
-            </div> --}}
         </div>
     </div>
-
 </x-app-layout>

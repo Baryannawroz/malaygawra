@@ -1,198 +1,110 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100" dir="rtl">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo width="60" height="60"
-                            class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
+@php
+    $isAdmin = (bool) (auth()->user()->isAdmin ?? false);
+    $on = fn (array $patterns) => request()->routeIs(...$patterns);
+    $teacherRoutes = ['teachers', 'teacher.edit', 'teacher.show', 'teacher.create', 'teacherSchedule.create', 'teacher.Schedules'];
+    $adminRoutes = ['administrators', 'administrator.*', 'schools', 'school.*', 'streets', 'street.*', 'lessons', 'lesson.*', 'stages', 'stage.*', 'register'];
+@endphp
+
+<nav class="mg-navbar" x-data="{ open: false }" @keydown.escape.window="open = false" aria-label="لیستی سەرەکی">
+    <div class="mg-navbar-inner">
+        <a href="{{ route('dashboard') }}" class="mg-navbar-brand">
+            <img src="{{ asset('images/malaygawra.png') }}" alt="لۆگۆی ڕێکخراوی مەلای گەورە">
+            <span class="mg-brand-title">ڕێکخراوی مەلای گەورە</span>
+        </a>
+
+        {{-- Desktop links --}}
+        <div class="mg-navbar-links">
+            <a href="{{ route('dashboard') }}" class="mg-top-link {{ $on(['dashboard']) ? 'is-active' : '' }}">
+                <i class="bi bi-grid-1x2"></i> داشبۆرد
+            </a>
+            <a href="{{ route('students') }}" class="mg-top-link {{ $on(['students', 'student.*']) ? 'is-active' : '' }}">
+                <i class="bi bi-people"></i> قوتابیان
+            </a>
+            <a href="{{ route('groups') }}" class="mg-top-link {{ $on(['groups', 'group.*', 'groupStudent.*', 'absent.*', 'absents', 'absence.records']) ? 'is-active' : '' }}">
+                <i class="bi bi-journal-bookmark"></i> دەرسەکان
+            </a>
+
+            <div class="mg-dd" x-data="{ dd: false }" @click.outside="dd = false">
+                <button type="button" class="mg-top-link {{ $on($teacherRoutes) ? 'is-active' : '' }}" @click="dd = !dd"
+                    :aria-expanded="dd" data-no-lock>
+                    <i class="bi bi-person-badge"></i> مامۆستایان <i class="bi bi-chevron-down mg-caret" :class="{ 'rot': dd }"></i>
+                </button>
+                <div class="mg-dd-menu" x-show="dd" x-cloak x-transition.opacity.duration.150ms>
+                    <a href="{{ route('teachers') }}" class="{{ $on(['teachers', 'teacher.edit', 'teacher.show', 'teacher.create']) ? 'is-active' : '' }}"><i class="bi bi-person-lines-fill"></i> لیستی مامۆستایان</a>
+                    <a href="{{ route('teacherSchedule.create') }}" class="{{ $on(['teacherSchedule.create']) ? 'is-active' : '' }}"><i class="bi bi-calendar-check"></i> غیاباتی مامۆستایان</a>
+                    <a href="{{ route('teacher.Schedules') }}" class="{{ $on(['teacher.Schedules']) ? 'is-active' : '' }}"><i class="bi bi-calendar-week"></i> خشتەی حەفتانە</a>
                 </div>
+            </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        داشبۆرد
-                    </x-nav-link>
+            <a href="{{ route('reports') }}" class="mg-top-link {{ $on(['reports', 'report.*']) ? 'is-active' : '' }}">
+                <i class="bi bi-bar-chart-line"></i> ڕاپۆرتەکان
+            </a>
+
+            @if ($isAdmin)
+            <div class="mg-dd" x-data="{ dd: false }" @click.outside="dd = false">
+                <button type="button" class="mg-top-link {{ $on($adminRoutes) ? 'is-active' : '' }}" @click="dd = !dd"
+                    :aria-expanded="dd" data-no-lock>
+                    <i class="bi bi-gear"></i> کارگێڕی <i class="bi bi-chevron-down mg-caret" :class="{ 'rot': dd }"></i>
+                </button>
+                <div class="mg-dd-menu" x-show="dd" x-cloak x-transition.opacity.duration.150ms>
+                    <a href="{{ route('administrators') }}" class="{{ $on(['administrators', 'administrator.*']) ? 'is-active' : '' }}"><i class="bi bi-briefcase"></i> کارگێڕان</a>
+                    <a href="{{ route('schools') }}" class="{{ $on(['schools', 'school.*']) ? 'is-active' : '' }}"><i class="bi bi-building"></i> قوتابخانەکان</a>
+                    <a href="{{ route('streets') }}" class="{{ $on(['streets', 'street.*']) ? 'is-active' : '' }}"><i class="bi bi-geo-alt"></i> گەڕەکەکان</a>
+                    <a href="{{ route('lessons') }}" class="{{ $on(['lessons', 'lesson.*']) ? 'is-active' : '' }}"><i class="bi bi-layers"></i> ئاستی وانەکان</a>
+                    <a href="{{ route('stages') }}" class="{{ $on(['stages', 'stage.*']) ? 'is-active' : '' }}"><i class="bi bi-diagram-3"></i> قۆناغەکان</a>
+                    <div class="mg-dd-sep"></div>
+                    <a href="{{ route('register') }}"><i class="bi bi-person-plus"></i> بەکارهێنەری نوێ</a>
                 </div>
+            </div>
+            @endif
+        </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('teachers')" :active="request()->routeIs('teachers')">
-                        مامۆستا
-                    </x-nav-link>
+        {{-- User menu --}}
+        <div class="mg-dd mg-navbar-user" x-data="{ dd: false }" @click.outside="dd = false">
+            <button type="button" class="mg-top-link" @click="dd = !dd" :aria-expanded="dd" data-no-lock>
+                <span class="mg-avatar" style="width:30px;height:30px;font-size:13px">{{ mb_substr(Auth::user()->name, 0, 1) }}</span>
+                <span class="mg-hide-sm">{{ Auth::user()->name }}</span>
+                <i class="bi bi-chevron-down mg-caret" :class="{ 'rot': dd }"></i>
+            </button>
+            <div class="mg-dd-menu mg-dd-end" x-show="dd" x-cloak x-transition.opacity.duration.150ms>
+                <div class="mg-dd-head">
+                    <div class="mg-user-name">{{ Auth::user()->name }}</div>
+                    <div class="mg-user-mail">{{ Auth::user()->email }}</div>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('students')" :active="request()->routeIs('students')">
-                        قوتابی
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('groups')" :active="request()->routeIs('groups')">
-                        دەرسەکان
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('reports')" :active="request()->routeIs('reports')">
-                        ڕاپۆرت
-                    </x-nav-link>
-                </div>
-
-                <!-- Teacher Dropdown -->
-
-                <div x-data="{ open: false }" class="relative {{ auth()->user()->isAdmin==0 ? 'hidden' :''}}">
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <div x-data="{ open: false }" class="relative">
-                            <x-nav-link class="flex items-center cursor-pointer" @click="open = !open">
-                                <span class="pt-5">کارگێڕی</span>
-                                <svg class="w-4 h-4 ml-1 transform transition-transform" :class="{'rotate-180': open}"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 -3 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </x-nav-link>
-
-                            <!-- Dropdown Menu -->
-                            <div x-show="open" @click.away="open = false"
-                                class="absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
-                                <div class="py-1" role="menu" aria-orientation="vertical"
-                                    aria-labelledby="options-menu">
-                                    <x-dropdown-link :href="route('streets')">
-                                        گەڕەک
-                                    </x-dropdown-link>
-                                    <x-dropdown-link :href="route('schools')">
-                                        قوتابخانە
-                                    </x-dropdown-link>
-                                    <x-dropdown-link :href="route('lessons')">
-                                        ئاستی وانەکان
-                                    </x-dropdown-link>
-                                    <x-dropdown-link :href="route('administrators')">
-                                        جەدوەلی کارگێر </x-dropdown-link>
-                                    <x-dropdown-link :href="route('register')">
-                                        بەکارهێنەر </x-dropdown-link>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!-- Dropdown Menu -->
-                        <div x-show="open" @click.away="open = false"
-                            class="absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
-                            <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                <x-dropdown-link :href="route('teachers')">
-                                    {{ __('Teacher Profile') }}
-                                </x-dropdown-link>
-                                <x-dropdown-link :href="route('teachers')">
-                                    {{ __('Schedule') }}
-                                </x-dropdown-link>
-                                <x-dropdown-link :href="route('teachers')">
-                                    {{ __('Contacts') }}
-                                </x-dropdown-link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Settings Dropdown -->
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
-                    <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            <button
-                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ Auth::user()->name }}</div>
-
-                                <div class="ms-1">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </button>
-                        </x-slot>
-
-                        <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-
-                            <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-
-                                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-dropdown>
-                </div>
-
-                <!-- Hamburger -->
-                <div class="-me-2 flex items-center sm:hidden">
-                    <button @click="open = ! open"
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                            <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex"
-                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16" />
-                            <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden"
-                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
+                <a href="{{ route('profile.edit') }}"><i class="bi bi-person-circle"></i> پرۆفایل</a>
+                <div class="mg-dd-sep"></div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="mg-dd-danger" data-no-lock><i class="bi bi-box-arrow-left"></i> چوونەدەرەوە</button>
+                </form>
             </div>
         </div>
 
-        <!-- Responsive Navigation Menu -->
-        <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Dashboard') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('students')" :active="request()->routeIs('students')">
-                    قوتابی
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('teachers')" :active="request()->routeIs('teachers')">
-                    مامۆستا
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('groups')" :active="request()->routeIs('groups')">
-                    دەرسەکان
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('reports')" :active="request()->routeIs('reports')">
-                    ڕاپۆرت
-                </x-responsive-nav-link>
+        {{-- Mobile toggle --}}
+        <button type="button" class="mg-btn mg-btn-ghost mg-btn-icon mg-navbar-toggle" @click="open = !open"
+            :aria-expanded="open" aria-label="کردنەوەی لیست" data-no-lock>
+            <i class="bi" :class="open ? 'bi-x-lg' : 'bi-list'" style="font-size:22px"></i>
+        </button>
+    </div>
 
-            </div>
-
-            <!-- Responsive Settings Options -->
-            <div class="pt-4 pb-1 border-t border-gray-200">
-                <div class="px-4">
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-                </div>
-
-                <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('profile.edit')">
-                        {{ __('Profile') }}
-                    </x-responsive-nav-link>
-
-                    <!-- Authentication -->
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-
-                        <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                            {{ __('Log Out') }}
-                        </x-responsive-nav-link>
-                    </form>
-                </div>
-            </div>
-        </div>
+    {{-- Mobile panel --}}
+    <div class="mg-navbar-mobile" x-show="open" x-cloak x-transition.opacity.duration.150ms>
+        <a href="{{ route('dashboard') }}" class="{{ $on(['dashboard']) ? 'is-active' : '' }}"><i class="bi bi-grid-1x2"></i> داشبۆرد</a>
+        <a href="{{ route('students') }}" class="{{ $on(['students', 'student.*']) ? 'is-active' : '' }}"><i class="bi bi-people"></i> قوتابیان</a>
+        <a href="{{ route('groups') }}" class="{{ $on(['groups', 'group.*', 'groupStudent.*', 'absent.*', 'absents', 'absence.records']) ? 'is-active' : '' }}"><i class="bi bi-journal-bookmark"></i> دەرسەکان</a>
+        <div class="mg-nav-section">مامۆستایان</div>
+        <a href="{{ route('teachers') }}" class="{{ $on(['teachers', 'teacher.edit', 'teacher.show', 'teacher.create']) ? 'is-active' : '' }}"><i class="bi bi-person-lines-fill"></i> لیستی مامۆستایان</a>
+        <a href="{{ route('teacherSchedule.create') }}" class="{{ $on(['teacherSchedule.create']) ? 'is-active' : '' }}"><i class="bi bi-calendar-check"></i> غیاباتی مامۆستایان</a>
+        <a href="{{ route('teacher.Schedules') }}" class="{{ $on(['teacher.Schedules']) ? 'is-active' : '' }}"><i class="bi bi-calendar-week"></i> خشتەی حەفتانە</a>
+        <a href="{{ route('reports') }}" class="{{ $on(['reports', 'report.*']) ? 'is-active' : '' }}"><i class="bi bi-bar-chart-line"></i> ڕاپۆرتەکان</a>
+        @if ($isAdmin)
+        <div class="mg-nav-section">کارگێڕی</div>
+        <a href="{{ route('administrators') }}"><i class="bi bi-briefcase"></i> کارگێڕان</a>
+        <a href="{{ route('schools') }}"><i class="bi bi-building"></i> قوتابخانەکان</a>
+        <a href="{{ route('streets') }}"><i class="bi bi-geo-alt"></i> گەڕەکەکان</a>
+        <a href="{{ route('lessons') }}"><i class="bi bi-layers"></i> ئاستی وانەکان</a>
+        <a href="{{ route('stages') }}"><i class="bi bi-diagram-3"></i> قۆناغەکان</a>
+        <a href="{{ route('register') }}"><i class="bi bi-person-plus"></i> بەکارهێنەری نوێ</a>
+        @endif
+    </div>
 </nav>

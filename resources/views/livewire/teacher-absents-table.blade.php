@@ -1,49 +1,32 @@
-<div dir="rtl">
-    <div class="container mx-auto p-4">
-        <table class="min-w-full bg-white border border-gray-300 text-center">
+@php
+    $arrow = fn ($col) => $sortBy === $col ? ($sortDirection === 'asc' ? '▲' : '▼') : '';
+@endphp
+<div class="mg-card">
+    <div class="mg-table-wrap">
+        <table class="mg-table">
             <thead>
                 <tr>
-                <th class="border-b p-2 cursor-pointer" wire:click="sortByTeacher()">
-                    ناوی مامۆستا
-                    @if ($sortBy === 'teacher_id')
-                    <span>{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
-                    @endif
-                </th>
-                    <th class="border-b p-2 cursor-pointer" wire:click="sortByPresentCount()">
-                        ئامادە بوو
-                        @if ($sortBy === 'present_count')
-                        <span>{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
-                        @endif
-                    </th>
-                    <th class="border-b p-2 cursor-pointer" wire:click="sortByAbsentCount()">
-                        غیاب
-                        @if ($sortBy === 'absent_count')
-                        <span>{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
-                        @endif
-                    </th>
-                    <th class="border-b p-2 cursor-pointer" wire:click="sortByPermissionCount()">
-                        ئیجازە
-                        @if ($sortBy === 'permission_count')
-                        <span>{{ $sortDirection === 'asc' ? '▲' : '▼' }}</span>
-                        @endif
-                    </th>
+                    <th class="sortable" wire:click="sortByTeacher()">ناوی مامۆستا {{ $arrow('teacher_id') }}</th>
+                    <th class="sortable" wire:click="sortByPresentCount()">هاتوو {{ $arrow('present_count') }}</th>
+                    <th class="sortable" wire:click="sortByAbsentCount()">غایب {{ $arrow('absent_count') }}</th>
+                    <th class="sortable" wire:click="sortByPermissionCount()">ئیجازە {{ $arrow('permission_count') }}</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($absents as $absent)
+                @forelse ($absents as $absent)
                 <tr>
-                    <td class="border-b p-2">{{ $absent->teacher->name }}</td>
-                    <td class="border-b p-2">{{ $absent->present_count }}</td>
-                    <td class="border-b p-2">{{ $absent->absent_count }}</td>
-                    <td class="border-b p-2">{{ $absent->permission_count }}</td>
+                    <td>{{ $absent->teacher->name ?? '—' }}</td>
+                    <td><span class="mg-badge mg-badge-success">{{ $absent->present_count }}</span></td>
+                    <td><span class="mg-badge mg-badge-danger">{{ $absent->absent_count }}</span></td>
+                    <td><span class="mg-badge mg-badge-warning">{{ $absent->permission_count }}</span></td>
                 </tr>
-                @endforeach
+                @empty
+                <x-mg-empty colspan="4" icon="bi-calendar-x" title="لەم ماوەیەدا هیچ غیاباتێک تۆمار نەکراوە" />
+                @endforelse
             </tbody>
         </table>
-
-        <!-- Pagination Links -->
-        <div class="mt-4">
-            {{ $absents->links() }}
-        </div>
     </div>
+    @if ($absents->hasPages())
+    <div class="mg-pagination">{{ $absents->links() }}</div>
+    @endif
 </div>

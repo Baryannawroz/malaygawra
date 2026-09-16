@@ -35,7 +35,7 @@ class SchoolController extends Controller
         School::create($request->validated());
 
         // Redirect back with a success message
-        return redirect()->back()->with('success', 'School created successfully.');
+        return redirect()->back()->with('success', 'قوتابخانەکە زیاد کرا');
     }
 
 
@@ -70,7 +70,7 @@ class SchoolController extends Controller
         $school->update($validated);
 
         // Redirect back with a success message
-        return redirect()->route('schools')->with('success', 'School updated successfully.');
+        return redirect()->route('schools')->with('success', 'گۆڕانکارییەکان پاشەکەوت کران');
     }
 
 
@@ -80,7 +80,7 @@ class SchoolController extends Controller
     public function destroy(School $school)
     {
         $school->delete();
-        return redirect()->route('schools')->with('success', 'School deleted successfully.');
+        return redirect()->route('schools')->with('success', 'قوتابخانەکە سڕایەوە');
 
     }
 }

@@ -1,72 +1,83 @@
 <x-app-layout>
-    <div class="bg-gray-100 py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white shadow-sm sm:rounded-lg p-6">
-                <h2 class="text-2xl font-bold mb-6">Attendance Form</h2>
+    <x-page-header title="وەرگرتنی غیابات" :subtitle="'دەرسی ' . $group->name" :back="route('groupStudent.show', $group->id)"
+        back-label="گەڕانەوە بۆ دەرس" />
 
-                @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4">
-                    {{ session('success') }}
+    @if ($students->isEmpty())
+    <div class="mg-card">
+        <x-mg-empty icon="bi-people" title="ئەم دەرسە هیچ قوتابییەکی تێدا نییە">
+            <a href="{{ route('groupStudent.create', $group->id) }}" class="mg-link">زیادکردنی قوتابی</a>
+        </x-mg-empty>
+    </div>
+    @else
+    <form action="{{ route('absent.store') }}" method="POST" class="mg-card"
+        x-data="{
+            counts() {
+                const v = [...$el.querySelectorAll('input[type=radio]:checked')].map(i => i.value);
+                return { p: v.filter(x => x === '0').length, a: v.filter(x => x === '1').length, l: v.filter(x => x === '2').length };
+            },
+            c: { p: {{ $students->count() }}, a: 0, l: 0 },
+            all(val) { $el.querySelectorAll('input[type=radio][value=\'' + val + '\']').forEach(i => i.checked = true); this.c = this.counts(); }
+        }"
+        @change="c = counts()">
+        @csrf
+        <input type="hidden" name="group_id" value="{{ $group->id }}">
+
+        <div class="mg-card-header">
+            <div class="mg-toolbar">
+                <div class="mg-field" style="flex-direction:row;align-items:center;gap:8px">
+                    <label for="date" class="mg-label">بەروار</label>
+                    <input type="date" id="date" name="date" class="mg-input" style="width:auto"
+                        value="{{ old('date', now()->toDateString()) }}" max="{{ now()->toDateString() }}" required>
                 </div>
-                @endif
-
-                <form action="{{ route('absent.store') }}" method="POST">
-                    @csrf
-
-                    <input type="hidden" name="group_id" value="{{ $group->id }}">
-
-                    <div class="mb-4">
-                        <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
-                        <input type="date" id="date" name="date" required
-                            class="mt-1 p-2 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                    </div>
-
-                    <table class="min-w-full divide-y divide-gray-200 mb-6 text-center" >
-                        <thead>
-                            <tr class="text-center">
-                                <th
-                                    class="px-6 py-3 bg-gray-50  text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    ژمارەی قوتابی</th>
-                                <th
-                                    class="px-6 py-3 bg-gray-50  text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    ناوی قوتابی</th>
-                                <th
-                                    class="px-6 py-3 bg-gray-50  text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    غیابات</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach($students as $student)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $student->id }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $student->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="hidden" name="students[{{ $loop->index }}][id]"
-                                        value="{{ $student->id }}">
-                                    <select name="students[{{ $loop->index }}][isAbsent]" id="">
-                                        <option value="0" class="bg-green-400">هاتوو</option>
-                                        <option value="1" class="bg-red-400">غایب</option>
-                                        <option value="2
-                                        " class="bg-red-400">ئیجازە</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Submit Attendance
-                    </button>
-                </form>
+            </div>
+            <div class="mg-toolbar">
+                <span class="mg-muted" style="font-size:13px">هەمووی بکە بە:</span>
+                <button type="button" class="mg-btn mg-btn-secondary mg-btn-sm" @click="all('0')" data-no-lock>هاتوو</button>
+                <button type="button" class="mg-btn mg-btn-secondary mg-btn-sm" @click="all('1')" data-no-lock>غایب</button>
             </div>
         </div>
-    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let today = new Date().toISOString().split('T')[0];
-            document.getElementById('date').value = today;
-        });
-    </script>
+        <div class="mg-table-wrap">
+            <table class="mg-table">
+                <thead>
+                    <tr>
+                        <th class="num">#</th>
+                        <th>ناوی قوتابی</th>
+                        <th style="text-align:left">دۆخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($students as $student)
+                    <tr>
+                        <td class="num">{{ $loop->iteration }}</td>
+                        <td>
+                            <div class="mg-cell-person">
+                                <x-photo-avatar :path="$student->photo_path" :name="$student->name" />
+                                <span>{{ $student->name }}</span>
+                            </div>
+                            <input type="hidden" name="students[{{ $loop->index }}][id]" value="{{ $student->id }}">
+                        </td>
+                        <td style="text-align:left">
+                            <div class="mg-seg" role="radiogroup" aria-label="دۆخی {{ $student->name }}">
+                                <label><input type="radio" class="present" name="students[{{ $loop->index }}][isAbsent]" value="0" checked><span>هاتوو</span></label>
+                                <label><input type="radio" class="absent" name="students[{{ $loop->index }}][isAbsent]" value="1"><span>غایب</span></label>
+                                <label><input type="radio" class="leave" name="students[{{ $loop->index }}][isAbsent]" value="2"><span>ئیجازە</span></label>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mg-card-footer" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+            <div class="mg-summary">
+                <span class="mg-badge mg-badge-success">هاتوو: <b x-text="c.p">{{ $students->count() }}</b></span>
+                <span class="mg-badge mg-badge-danger">غایب: <b x-text="c.a">0</b></span>
+                <span class="mg-badge mg-badge-warning">ئیجازە: <b x-text="c.l">0</b></span>
+            </div>
+            <button type="submit" class="mg-btn mg-btn-primary"><i class="bi bi-check-lg"></i> تۆمارکردنی غیابات</button>
+        </div>
+    </form>
+    @endif
 </x-app-layout>

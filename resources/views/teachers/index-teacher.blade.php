@@ -1,71 +1,74 @@
 <x-app-layout>
-    <div class="container mx-auto mt-10" dir="rtl" style="margin: 0 2%">
-        <h1 class="text-3xl font-bold mb-5">لیستی مامۆستاکان</h1>
-        <div class="flex justify-center">
+    <x-page-header title="مامۆستایان" subtitle="کۆی گشتی: {{ number_format($teachers->total()) }} مامۆستا">
+        <a href="{{ route('teacher.Schedules') }}" class="mg-btn mg-btn-secondary"><i class="bi bi-calendar-week"></i> خشتەی حەفتانە</a>
+        <a href="{{ route('teacherSchedule.create') }}" class="mg-btn mg-btn-secondary"><i class="bi bi-calendar-check"></i> غیاباتی ئەمڕۆ</a>
+        <a href="{{ route('teacher.create') }}" class="mg-btn mg-btn-primary"><i class="bi bi-plus-lg"></i> زیادکردنی مامۆستا</a>
+    </x-page-header>
 
-            <x-add-teacher-button>
-            </x-add-teacher-button>
-            <x-add-button :route="route('teacherSchedule.create')" :name="'غیاباتی ئەمڕۆ '">
-            </x-add-button>
-            <x-add-button :route="route('teacher.Schedules')" :name="'جەدوەلی حەفتانەی'">
-            </x-add-button>
+    <div class="mg-card">
+        <div class="mg-card-header">
+            <form action="{{ route('teachers') }}" method="GET" class="mg-toolbar" style="flex:1">
+                <div class="mg-search">
+                    <i class="bi bi-search"></i>
+                    <input type="search" name="search" class="mg-input" placeholder="گەڕان بە ناوی مامۆستا..."
+                        value="{{ $search }}" aria-label="گەڕان بە ناوی مامۆستا">
+                </div>
+                <button type="submit" class="mg-btn mg-btn-secondary" data-no-lock>گەڕان</button>
+                @if ($search)
+                <a href="{{ route('teachers') }}" class="mg-btn mg-btn-ghost">پاککردنەوە</a>
+                @endif
+            </form>
         </div>
 
-        <form action="{{ route('teachers') }}" method="GET" class="mb-5">
-            <div class="flex" style="margin:  2% 0">
-                <input type="text" name="search"
-                    class="form-input flex-grow rounded-l-lg border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white"
-                    placeholder="ناوی مامۆستا" value="{{ request()->input('search') }}">
-                <button
-                    class="bg-blue-500 text-white rounded-r-lg px-4 py-2 uppercase border-blue-500 border-t border-b border-r">گەڕان</button>
-            </div>
-        </form>
-
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-white border border-gray-200 text-center    ">
+        <div class="mg-table-wrap">
+            <table class="mg-table">
                 <thead>
-                    <tr class="text-center">
-                        <th class="py-2 px-4 bg-gray-200 border-b  text-sm font-semibold text-gray-600 text-center ">#
-                        </th>
-                        <th class="py-2 px-4 bg-gray-200 border-b  text-sm font-semibold text-gray-600 text-center">ناوی
-                            مامۆستا
-                        </th>
-                        <th class="py-2 px-4 bg-gray-200 border-b  text-sm font-semibold text-gray-600 text-center">
-                            ڕەقەم تەلەفون
-                        </th>
-                        <th class="py-2 px-4 bg-gray-200 border-b  text-sm font-semibold text-gray-600 text-center">
-                            گۆڕانکاری
-                        </th>
+                    <tr>
+                        <th class="num">#</th>
+                        <th>ناوی مامۆستا</th>
+                        <th>ژمارەی مۆبایل</th>
+                        <th class="mg-hide-mobile">ڕەگەز</th>
+                        <th class="actions"><span class="sr-only">کردارەکان</span></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($teachers as $teacher)
+                    @forelse ($teachers as $teacher)
                     <tr>
-                        <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $teacher->id }}</td>
-                        <td class="py-2 px-4 border-b text-sm text-gray-700"><a
-                                href="{{ route('teacher.show',$teacher) }}">{{ $teacher->name }}</a></td>
-                        <td class="py-2 px-4 border-b text-sm text-gray-700">{{ $teacher->phone }}</td>
-                        <td class="py-2 px-4 border-b text-sm text-gray-700"><a class="py-2 px-4"
-                                href="{{ route('teacher.edit',$teacher) }}">گۆرانکاری</a>
-@if (auth()->user()->isAdmin)
-
-<a href="{{ route('teacher.delete',$teacher) }}">سڕینەوە</a>
-@endif
+                        <td class="num">{{ $teachers->firstItem() + $loop->index }}</td>
+                        <td>
+                            <a href="{{ route('teacher.show', $teacher) }}" class="mg-cell-person">
+                                <x-photo-avatar :path="$teacher->photo_path" :name="$teacher->name" />
+                                <span class="mg-link">{{ $teacher->name }}</span>
+                            </a>
                         </td>
-
-
+                        <td><a href="tel:{{ $teacher->phone }}" class="ltr">{{ $teacher->phone }}</a></td>
+                        <td class="mg-hide-mobile">{{ $teacher->gender() }}</td>
+                        <td class="actions">
+                            <div class="actions-inner">
+                                <a href="{{ route('teacher.edit', $teacher) }}" class="mg-btn mg-btn-ghost mg-btn-icon primary"
+                                    title="دەستکاری" aria-label="دەستکاریکردنی {{ $teacher->name }}"><i class="bi bi-pencil"></i></a>
+                                @if (auth()->user()->isAdmin)
+                                <form action="{{ route('teacher.destroy', $teacher) }}" method="POST"
+                                    data-confirm="دڵنیایت لە سڕینەوەی «{{ $teacher->name }}»؟ ئەم کارە ناگەڕێتەوە.">
+                                    @csrf
+                                    <button type="submit" class="mg-btn mg-btn-ghost mg-btn-icon danger" title="سڕینەوە"
+                                        aria-label="سڕینەوەی {{ $teacher->name }}"><i class="bi bi-trash"></i></button>
+                                </form>
+                                @endif
+                            </div>
+                        </td>
                     </tr>
                     @empty
-                    <tr>
-                        <td colspan="3" class="py-4 text-center text-sm text-gray-500">هیچ مامۆستایەک بەردەست نییە</td>
-                    </tr>
+                    <x-mg-empty colspan="5" icon="bi-person-badge" :title="$search ? 'هیچ مامۆستایەک بەم ناوە نەدۆزرایەوە' : 'هێشتا هیچ مامۆستایەک تۆمار نەکراوە'" />
                     @endforelse
                 </tbody>
             </table>
         </div>
 
-        <div class="mt-5">
+        @if ($teachers->hasPages())
+        <div class="mg-pagination">
             {{ $teachers->appends(['search' => $search])->links('pagination::tailwind') }}
         </div>
+        @endif
     </div>
 </x-app-layout>

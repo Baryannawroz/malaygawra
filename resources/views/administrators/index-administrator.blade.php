@@ -1,19 +1,14 @@
 <x-app-layout>
-    <div class="container mx-auto mt-10" dir="rtl" style="margin: 0 2%">
-        <h1 class="text-3xl font-bold mb-5">لیستی کارگێڕەکان</h1>
-        <div class="flex justify-center">
+    <x-page-header title="کارگێڕان" subtitle="غیابات و خشتەی حەفتانەی ستافی کارگێڕی" />
 
-
-            <x-add-button :route="route('administrator.create')" :name="'غیاباتی ئەمڕۆ '">
-            </x-add-button>
-            <x-add-button :route="route('administrator.Schedules')" :name="'جەدوەلی حەفتانەی'">
-            </x-add-button>
-        </div>
-
-
-
-
-
-
+    <div class="mg-quick">
+        <a href="{{ route('administrator.create') }}">
+            <i class="bi bi-calendar-check"></i>
+            <span>غیاباتی ئەمڕۆ<small>تۆمارکردنی ئامادەبوونی کارگێڕان</small></span>
+        </a>
+        <a href="{{ route('administrator.Schedules') }}">
+            <i class="bi bi-calendar-week"></i>
+            <span>خشتەی حەفتانە<small>دیاریکردنی ڕۆژانی کاری هەر کارگێڕێک</small></span>
+        </a>
     </div>
 </x-app-layout>

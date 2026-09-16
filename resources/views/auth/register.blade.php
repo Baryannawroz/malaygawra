@@ -1,52 +1,37 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <h1 style="font-size:20px;margin-bottom:4px">دروستکردنی بەکارهێنەر</h1>
+    <p class="mg-muted" style="margin-bottom:18px;font-size:14px">هەژمارێکی نوێ بۆ سیستەم دروست بکە.</p>
+
+    <form method="POST" action="{{ route('register') }}" class="mg-stack">
         @csrf
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        <div class="mg-field">
+            <x-input-label for="name" value="ناو" />
+            <x-text-input id="name" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('name')" />
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="mg-field">
+            <x-input-label for="email" value="ئیمەیڵ" />
+            <x-text-input id="email" type="email" name="email" :value="old('email')" required autocomplete="username" dir="ltr" />
+            <x-input-error :messages="$errors->get('email')" />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="mg-field">
+            <x-input-label for="password" value="وشەی نهێنی" />
+            <x-text-input id="password" type="password" name="password" required autocomplete="new-password" dir="ltr" />
+            <p class="mg-help">لانیکەم ٨ پیت.</p>
+            <x-input-error :messages="$errors->get('password')" />
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div class="mg-field">
+            <x-input-label for="password_confirmation" value="دووبارەکردنەوەی وشەی نهێنی" />
+            <x-text-input id="password_confirmation" type="password" name="password_confirmation" required
+                autocomplete="new-password" dir="ltr" />
+            <x-input-error :messages="$errors->get('password_confirmation')" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
+        <button type="submit" class="mg-btn mg-btn-primary" style="width:100%">دروستکردن</button>
+        <p style="text-align:center;font-size:14px"><a class="mg-link" href="{{ route('login') }}">پێشتر هەژمارت هەیە؟ چوونەژوورەوە</a></p>
     </form>
 </x-guest-layout>

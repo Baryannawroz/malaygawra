@@ -37,7 +37,7 @@ class GroupStudentController extends Controller
         GroupStudent::where('group_id', $groupId)
             ->where('student_id', $studentId)
             ->delete();
-        return redirect()->route('groupStudent.show', $groupId)->with('success', 'Student removed from the group successfully.');
+        return redirect()->route('groupStudent.show', $groupId)->with('success', 'قوتابییەکە لە دەرسەکە لابرا');
     }
 
 
@@ -76,6 +76,6 @@ class GroupStudentController extends Controller
     {
         GroupStudent::create($request->all());
 
-        return redirect()->route('groupStudent.show', $request->group_id)->with('success', 'Student added to group successfully!');
+        return redirect()->route('groupStudent.show', $request->group_id)->with('success', 'قوتابییەکە بۆ دەرسەکە زیاد کرا');
     }
 }

@@ -35,9 +35,9 @@ class ApiController extends Controller
             'day_of_week' => 'required|string'
         ]);
 
-        teacherSchedule::create($request->only('teacher_id', 'day_of_week'));
+        $schedule = teacherSchedule::create($request->only('teacher_id', 'day_of_week'));
         $teacher = Teacher::find($request['teacher_id']);
-        return response()->json(['name' => $teacher['name'], 'id' => $teacher['id']]);
+        return response()->json(['name' => $teacher['name'], 'id' => $teacher['id'], 'schedule_id' => $schedule->id]);
     }
     public function addAdministratorSchedule(Request $request)
     {
@@ -46,9 +46,9 @@ class ApiController extends Controller
             'day_of_week' => 'required|string'
         ]);
 
-        AdministratorSchedule::create($request->only('teacher_id', 'day_of_week'));
+        $schedule = AdministratorSchedule::create($request->only('teacher_id', 'day_of_week'));
         $teacher = Teacher::find($request['teacher_id']);
-        return response()->json(['name' => $teacher['name'], 'id' => $teacher['id']]);
+        return response()->json(['name' => $teacher['name'], 'id' => $teacher['id'], 'schedule_id' => $schedule->id]);
     }
     public function destroyTeacherSchedule($id)
     {
