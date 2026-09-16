@@ -42,6 +42,20 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Serve uploaded photos when the public/storage symlink is not web-accessible
+// (typical when the whole Laravel app lives in public_html).
+Route::get('/storage/{path}', function (string $path) {
+    $path = str_replace('\\', '/', $path);
+    abort_if(str_contains($path, '..'), 404);
+
+    $base = realpath(storage_path('app/public'));
+    $file = realpath(storage_path('app/public/' . $path));
+
+    abort_unless($base && $file && str_starts_with($file, $base) && is_file($file), 404);
+
+    return response()->file($file);
+})->where('path', '.*');
+
 Route::get('schools', [SchoolController::class, 'index'])->name('schools');
 Route::get('school/edit/{school}', [SchoolController::class, 'edit'])->name('school.edit');
 Route::post('school/update/{school}', [SchoolController::class, 'update'])->name('school.update');

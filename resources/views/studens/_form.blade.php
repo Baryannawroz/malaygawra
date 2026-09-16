@@ -137,7 +137,7 @@
             <div class="mg-avatar mg-avatar-xl" style="width:88px;height:88px;font-size:28px">
                 <template x-if="preview"><img :src="preview" alt=""></template>
                 @if ($s?->photo_path)
-                <img x-show="!preview" src="{{ asset('storage/' . $s->photo_path) }}" alt="" onerror="this.remove()">
+                <img x-show="!preview" src="{{ url('storage/' . ltrim(preg_replace('#^(storage/|public/)+#', '', str_replace('\\', '/', $s->photo_path)), '/')) }}" alt="" onerror="this.remove()">
                 @endif
                 <i class="bi bi-camera" style="color:var(--mg-text-faint)"></i>
             </div>

@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{{ asset('build/assets/app-HxD4TBxZ.css') }}">
 
     <!-- Malaygawra design system (must stay last) -->
-    <link rel="stylesheet" href="{{ asset('css/mg-ui.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/mg-ui.css') }}?v=2">
 </head>
 
 <body class="mg">

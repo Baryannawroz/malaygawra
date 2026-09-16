@@ -16,7 +16,7 @@
 
     <script type="module" src="{{ asset('build/assets/app-Bg1aHGgo.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('build/assets/app-HxD4TBxZ.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/mg-ui.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/mg-ui.css') }}?v=2">
 </head>
 
 <body class="mg">

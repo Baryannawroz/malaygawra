@@ -16,7 +16,7 @@
                     <h2 style="font-size:22px">{{ $student->name }}</h2>
                     <div class="mg-summary" style="margin-top:8px">
                         <span class="mg-badge mg-badge-primary">{{ $student->gender() }}</span>
-                        <span class="mg-badge">{{ $student->school->name ?? '—' }}</span>
+                        <span class="mg-badge">{{ $student->school?->name ?? '—' }}</span>
                         <span class="mg-badge">{{ $student->school_stage }}</span>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                 <div><dt>مۆبایلی قوتابی</dt><dd><a class="ltr mg-link" href="tel:{{ $student->phone }}">{{ $student->phone ?: '—' }}</a></dd></div>
                 <div><dt>مۆبایلی باوک</dt><dd><a class="ltr mg-link" href="tel:{{ $student->father_phone }}">{{ $student->father_phone ?: '—' }}</a></dd></div>
                 <div><dt>مۆبایلی دایک</dt><dd><a class="ltr mg-link" href="tel:{{ $student->mother_phone }}">{{ $student->mother_phone ?: '—' }}</a></dd></div>
-                <div><dt>گەڕەک</dt><dd>{{ $student->street->name ?? '—' }}</dd></div>
+                <div><dt>گەڕەک</dt><dd>{{ $student->street?->name ?? '—' }}</dd></div>
             </dl>
         </div>
     </div>
@@ -43,9 +43,9 @@
                 <div><dt>بەرواری لەدایکبوون</dt><dd class="ltr">{{ $student->birth_date }}</dd></div>
                 <div><dt>باری خێزانی</dt><dd>{{ $student->marital() }}</dd></div>
                 <div><dt>باری دارایی</dt><dd>{{ $student->financialStatus() }}</dd></div>
-                <div><dt>قوتابخانە</dt><dd>{{ $student->school->name ?? '—' }}</dd></div>
-                <div><dt>ئاستی پەروەردەیی</dt><dd>{{ $parwarda->name ?? '—' }}</dd></div>
-                <div><dt>ئاستی قیرائەت</dt><dd>{{ $quran->name ?? '—' }}</dd></div>
+                <div><dt>قوتابخانە</dt><dd>{{ $student->school?->name ?? '—' }}</dd></div>
+                <div><dt>ئاستی پەروەردەیی</dt><dd>{{ $parwarda?->name ?? '—' }}</dd></div>
+                <div><dt>ئاستی قیرائەت</dt><dd>{{ $quran?->name ?? '—' }}</dd></div>
             </dl>
         </div>
     </div>
