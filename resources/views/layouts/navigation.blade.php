@@ -1,5 +1,5 @@
 @php
-    $isAdmin = (bool) (auth()->user()->isAdmin ?? false);
+    $isAdmin = (bool) (auth()->user()?->isAdmin ?? false);
     $on = fn (array $patterns) => request()->routeIs(...$patterns);
     $teacherRoutes = ['teachers', 'teacher.edit', 'teacher.show', 'teacher.create', 'teacherSchedule.create', 'teacher.Schedules'];
     $adminRoutes = ['administrators', 'administrator.*', 'schools', 'school.*', 'streets', 'street.*', 'lessons', 'lesson.*', 'stages', 'stage.*', 'register'];
@@ -60,6 +60,7 @@
         </div>
 
         {{-- User menu --}}
+        @auth
         <div class="mg-dd mg-navbar-user" x-data="{ dd: false }" @click.outside="dd = false">
             <button type="button" class="mg-top-link" @click="dd = !dd" :aria-expanded="dd" data-no-lock>
                 <span class="mg-avatar" style="width:30px;height:30px;font-size:13px">{{ mb_substr(Auth::user()->name, 0, 1) }}</span>
@@ -79,6 +80,9 @@
                 </form>
             </div>
         </div>
+        @else
+        <a href="{{ route('login') }}" class="mg-btn mg-btn-primary">چوونەژوورەوە</a>
+        @endauth
 
         {{-- Mobile toggle --}}
         <button type="button" class="mg-btn mg-btn-ghost mg-btn-icon mg-navbar-toggle" @click="open = !open"

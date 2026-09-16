@@ -57,12 +57,8 @@ class TeacherController extends Controller
             'birth_date' => 'required|date',
         ]);
 
-        // Handle the photo upload
         if ($request->hasFile('photo_path')) {
-            $file = $request->file('photo_path');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('public/photos', $filename);
-            $photoPath = str_replace('public/', '', $path);
+            $photoPath = \App\Support\Photo::store($request->file('photo_path'));
         }
 
         // Create a new teacher record
@@ -106,12 +102,7 @@ class TeacherController extends Controller
         $data = collect($request->validated())->except('photo_path')->all();
         $teacher->update($data);
         if ($request->hasFile('photo_path')) {
-
-            $file = $request->file('photo_path');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('public/photos', $filename);
-            $photoPath = str_replace('public/', '', $path);
-            $teacher->update(['photo_path' => $photoPath]);
+            $teacher->update(['photo_path' => \App\Support\Photo::store($request->file('photo_path'))]);
         }
         return redirect()->route('teacher.show', $teacher)->with('success', 'زانیارییەکانی مامۆستا پاشەکەوت کران');
     }

@@ -60,12 +60,8 @@ class StudentsController extends Controller
             'birth_date' => 'required|date',
         ]);
 
-        // Handle the photo upload
         if ($request->hasFile('photo_path')) {
-            $file = $request->file('photo_path');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('public/photos', $filename);
-            $photoPath = str_replace('public/', '', $path);
+            $photoPath = \App\Support\Photo::store($request->file('photo_path'));
         }
 
         // Create a new student record
@@ -136,12 +132,7 @@ class StudentsController extends Controller
         $student->update($request->except(['_token', 'photo_path']));
 
         if ($request->hasFile('photo_path')) {
-
-            $file = $request->file('photo_path');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('public/photos', $filename);
-            $photoPath = str_replace('public/', '', $path);
-            $student->update(['photo_path' => $photoPath]);
+            $student->update(['photo_path' => \App\Support\Photo::store($request->file('photo_path'))]);
         }
 
         return redirect()->route('students')->with('success', 'زانیارییەکانی قوتابی پاشەکەوت کران');
