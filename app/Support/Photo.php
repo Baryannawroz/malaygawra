@@ -12,7 +12,7 @@ class Photo
             return null;
         }
 
-        return url('student-photos/'.$name);
+        return url('media/photo').'?f='.rawurlencode($name);
     }
 
     public static function filename(?string $path): ?string
@@ -79,14 +79,33 @@ class Photo
         }
 
         foreach ([
-            public_path('photos/'.$name),
-            storage_path('app/public/photos/'.$name),
-            storage_path('app/public/public/photos/'.$name),
-            public_path('storage/photos/'.$name),
-            storage_path('photos/'.$name),
-        ] as $file) {
-            if (is_file($file)) {
-                return $file;
+            storage_path('app/public/photos'),
+            storage_path('app/public/public/photos'),
+            public_path('photos'),
+            public_path('storage/photos'),
+        ] as $dir) {
+            $direct = $dir.DIRECTORY_SEPARATOR.$name;
+            if (is_file($direct)) {
+                return $direct;
+            }
+        }
+
+        foreach ([
+            storage_path('app/public/photos'),
+            public_path('photos'),
+        ] as $dir) {
+            if (! is_dir($dir)) {
+                continue;
+            }
+
+            foreach (scandir($dir) ?: [] as $entry) {
+                if ($entry === '.' || $entry === '..') {
+                    continue;
+                }
+
+                if (strcasecmp($entry, $name) === 0 && is_file($dir.DIRECTORY_SEPARATOR.$entry)) {
+                    return $dir.DIRECTORY_SEPARATOR.$entry;
+                }
             }
         }
 

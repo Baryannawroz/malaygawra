@@ -42,21 +42,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/student-photos/{file}', function (string $file) {
-    $file = basename(urldecode($file));
-    abort_if($file === '' || str_contains($file, '..'), 404);
+Route::get('/media/photo', function (Request $request) {
+    $file = \App\Support\Photo::fullPath($request->query('f'));
+    abort_unless($file, 404);
 
-    foreach ([
-        storage_path('app/public/photos/'.$file),
-        public_path('photos/'.$file),
-    ] as $path) {
-        if (is_file($path)) {
-            return response()->file($path);
-        }
-    }
-
-    abort(404);
-})->where('file', '[^/]+')->name('student.photos');
+    return response()->file($file);
+})->name('student.photos');
 
 Route::get('schools', [SchoolController::class, 'index'])->name('schools');
 Route::get('school/edit/{school}', [SchoolController::class, 'edit'])->name('school.edit');
