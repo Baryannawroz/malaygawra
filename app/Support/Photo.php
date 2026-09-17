@@ -12,9 +12,7 @@ class Photo
             return null;
         }
 
-        self::publishOne($name);
-
-        return asset('photos/'.$name);
+        return url('student-photos/'.$name);
     }
 
     public static function filename(?string $path): ?string
