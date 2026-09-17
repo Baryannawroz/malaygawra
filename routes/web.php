@@ -49,6 +49,38 @@ Route::get('/media/photo', function (Request $request) {
     return response()->file($file);
 })->name('student.photos');
 
+// TEMPORARY diagnostic: shows where PHP actually finds photo files on the server.
+// Remove this route once photos are confirmed working.
+Route::get('/media/debug', function (Request $request) {
+    $name = $request->query('f');
+
+    $dirs = [];
+    foreach ([
+        storage_path('app/public/photos'),
+        storage_path('app/public/public/photos'),
+        public_path('photos'),
+        public_path('storage/photos'),
+    ] as $dir) {
+        $dirs[$dir] = [
+            'exists' => is_dir($dir),
+            'readable' => is_dir($dir) && is_readable($dir),
+            'count' => is_dir($dir) ? count(glob($dir.DIRECTORY_SEPARATOR.'*') ?: []) : 0,
+            'sample' => is_dir($dir)
+                ? array_map('basename', array_slice(glob($dir.DIRECTORY_SEPARATOR.'*') ?: [], 0, 8))
+                : [],
+        ];
+    }
+
+    return response()->json([
+        'storage_path(app)' => storage_path('app'),
+        'public_path()' => public_path(),
+        'requested' => $name,
+        'resolved' => $name ? \App\Support\Photo::fullPath($name) : null,
+        'index_size' => count(\App\Support\Photo::index()),
+        'dirs' => $dirs,
+    ], 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+})->name('media.debug');
+
 Route::get('schools', [SchoolController::class, 'index'])->name('schools');
 Route::get('school/edit/{school}', [SchoolController::class, 'edit'])->name('school.edit');
 Route::post('school/update/{school}', [SchoolController::class, 'update'])->name('school.update');

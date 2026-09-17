@@ -4,6 +4,9 @@ namespace App\Support;
 
 class Photo
 {
+    /** @var array<string,string>|null */
+    private static ?array $index = null;
+
     public static function url(?string $path): ?string
     {
         $name = self::filename($path);
@@ -37,37 +40,34 @@ class Photo
     public static function store(\Illuminate\Http\UploadedFile $file): string
     {
         $filename = time().'_'.preg_replace('/[^A-Za-z0-9._-]/', '_', $file->getClientOriginalName());
-        $dir = public_path('photos');
-
-        if (! is_dir($dir)) {
-            mkdir($dir, 0755, true);
-        }
-
-        $file->move($dir, $filename);
 
         $storageDir = storage_path('app/public/photos');
         if (! is_dir($storageDir)) {
             mkdir($storageDir, 0755, true);
         }
-        @copy($dir.DIRECTORY_SEPARATOR.$filename, $storageDir.DIRECTORY_SEPARATOR.$filename);
+
+        $file->move($storageDir, $filename);
+
+        self::$index = null;
 
         return 'photos/'.$filename;
     }
 
-    public static function publish(): int
+    /**
+     * Base directories that may contain uploaded photos, in priority order.
+     *
+     * @return array<int,string>
+     */
+    public static function baseDirs(): array
     {
-        $from = storage_path('app/public/photos');
-        $count = 0;
-
-        if (is_dir($from)) {
-            foreach (glob($from.DIRECTORY_SEPARATOR.'*') ?: [] as $file) {
-                if (is_file($file) && self::publishOne(basename($file), $file)) {
-                    $count++;
-                }
-            }
-        }
-
-        return $count;
+        return array_values(array_filter([
+            storage_path('app/public/photos'),
+            storage_path('app/public/public/photos'),
+            storage_path('app/public'),
+            public_path('photos'),
+            public_path('storage/photos'),
+            public_path('storage/app/public/photos'),
+        ], 'is_dir'));
     }
 
     public static function fullPath(?string $path): ?string
@@ -78,59 +78,61 @@ class Photo
             return null;
         }
 
-        foreach ([
-            storage_path('app/public/photos'),
-            storage_path('app/public/public/photos'),
-            public_path('photos'),
-            public_path('storage/photos'),
-        ] as $dir) {
+        // Fast path: exact file in a known directory.
+        foreach (self::baseDirs() as $dir) {
             $direct = $dir.DIRECTORY_SEPARATOR.$name;
             if (is_file($direct)) {
                 return $direct;
             }
         }
 
-        foreach ([
-            storage_path('app/public/photos'),
-            public_path('photos'),
-        ] as $dir) {
-            if (! is_dir($dir)) {
-                continue;
-            }
+        // Robust path: case-insensitive lookup in a recursive index.
+        $index = self::index();
+        $key = mb_strtolower($name);
 
-            foreach (scandir($dir) ?: [] as $entry) {
-                if ($entry === '.' || $entry === '..') {
+        return $index[$key] ?? null;
+    }
+
+    /**
+     * Build (and cache) a filename => absolute path index by scanning
+     * the storage and public trees. Handles unknown upload locations.
+     *
+     * @return array<string,string>
+     */
+    public static function index(): array
+    {
+        if (self::$index !== null) {
+            return self::$index;
+        }
+
+        $roots = array_values(array_filter([
+            storage_path('app'),
+            public_path('photos'),
+            public_path('storage'),
+        ], 'is_dir'));
+
+        $map = [];
+
+        foreach ($roots as $root) {
+            $iterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($root, \FilesystemIterator::SKIP_DOTS),
+                \RecursiveIteratorIterator::LEAVES_ONLY
+            );
+
+            foreach ($iterator as $file) {
+                if (! $file->isFile()) {
                     continue;
                 }
 
-                if (strcasecmp($entry, $name) === 0 && is_file($dir.DIRECTORY_SEPARATOR.$entry)) {
-                    return $dir.DIRECTORY_SEPARATOR.$entry;
+                $key = mb_strtolower($file->getFilename());
+
+                // First match wins (roots are ordered by priority).
+                if (! isset($map[$key])) {
+                    $map[$key] = $file->getPathname();
                 }
             }
         }
 
-        return null;
-    }
-
-    private static function publishOne(string $name, ?string $source = null): bool
-    {
-        $destDir = public_path('photos');
-        $dest = $destDir.DIRECTORY_SEPARATOR.$name;
-
-        if (is_file($dest)) {
-            return true;
-        }
-
-        $source = $source ?: self::fullPath($name);
-
-        if (! $source || ! is_file($source)) {
-            return false;
-        }
-
-        if (! is_dir($destDir)) {
-            mkdir($destDir, 0755, true);
-        }
-
-        return @copy($source, $dest);
+        return self::$index = $map;
     }
 }
